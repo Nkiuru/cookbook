@@ -10,12 +10,11 @@ const signup = async (_, { email, password, firstName, lastName }) => {
     if (existingUser) {
       throw new UserInputError('User already exists');
     }
-
     const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
 
     const user = await User.create({
       email,
-      hashedPassword,
+      password: hashedPassword,
       firstName,
       lastName,
     });
@@ -23,7 +22,6 @@ const signup = async (_, { email, password, firstName, lastName }) => {
     return {
       ...user._doc,
       id: user.id,
-      hashedPassword: null,
     };
   } catch (e) {
     throw e;

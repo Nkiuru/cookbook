@@ -21,4 +21,4 @@ const getUser = async req => {
   }
 };
 
-module.exports = getUser;
+module.exports = { getUser };
