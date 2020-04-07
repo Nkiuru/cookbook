@@ -18,7 +18,13 @@ DB_URL=SET_ME
 JWT_SECRET=SET_ME
 JWT_LIFE_TIME=7d
 WORKERS=1
+NODE_ENV= development || production
+SSL_KEY=SET ME
+SSL_CERT=SET ME
 ```
+
+#### Production build
+Set `NODE_ENV` to 'production' set paths to `SLL_KEY` & `SSL_CERT`.
 
 ### **Frontend** 
 _TODO_
