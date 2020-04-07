@@ -8,16 +8,17 @@ const login = async (_, { email, password }) => {
   const user = await User.findOne({ email });
 
   if (!user) {
-    throw new AuthenticationError('Incorrect username / password');
+    throw new AuthenticationError('Incorrect email / password');
   }
 
   const isPasswordValid = await bcrypt.compare(password, user.password);
 
   if (!isPasswordValid) {
-    throw new AuthenticationError('Incorrect username / password');
+    throw new AuthenticationError('Incorrect email / password');
   }
   const token = tokenUtil.create(user.id);
-
+  user.update({ lastActive: Date.now() });
+  await user.save();
   return {
     user: {
       ...user._doc,
