@@ -37,7 +37,7 @@ const recipeSchema = new mongoose.Schema({
         ref: 'unit',
         required: true,
       },
-      ingridient: {
+      ingredient: {
         type: mongoose.Types.ObjectId,
         ref: 'ingredient',
         required: true,
@@ -70,20 +70,27 @@ const recipeSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
       },
+      altText: {
+        type: String,
+        maxlength: 300,
+      },
     },
   ],
   calories: {
     type: Number,
     min: 0,
+    required: true,
   },
   cookingTime: {
     type: String,
+    required: true,
   },
-  rating: {
-    type: Number,
-    min: 0,
-    max: 5,
-  },
+  rating: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: 'rating',
+    },
+  ],
   difficulty: {
     type: String,
     enum: Object.keys(difficulty),
@@ -100,6 +107,26 @@ const recipeSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  originalAuthor: {
+    type: mongoose.Types.ObjectId,
+    ref: 'user',
+  },
+  author: {
+    type: mongoose.Types.ObjectId,
+    ref: 'user',
+  },
+  tags: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: 'tag',
+    },
+  ],
+  reviews: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: 'review',
+    },
+  ],
 });
 
 const Recipe = mongoose.model('recipe', recipeSchema);

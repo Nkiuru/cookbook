@@ -106,3 +106,5 @@ dist
 # HTTPS certs
 ssl-key.pem
 ssl-cert.pem
+
+.idea/
