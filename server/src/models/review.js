@@ -6,6 +6,11 @@ const reviewSchema = new mongoose.Schema({
     ref: 'user',
     required: true,
   },
+  recipeId: {
+    type: mongoose.Types.ObjectId,
+    ref: 'recipe',
+    required: true,
+  },
   content: {
     type: String,
     required: true,
