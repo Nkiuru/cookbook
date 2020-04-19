@@ -29,6 +29,18 @@ const userSchema = new mongoose.Schema({
   lastActive: {
     type: Date,
   },
+  lists: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: 'list',
+    },
+  ],
+  followedLists: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: 'list',
+    },
+  ],
 });
 
 userSchema.virtual('fullName').get(function() {
