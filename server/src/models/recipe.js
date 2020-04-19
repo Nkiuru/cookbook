@@ -127,6 +127,12 @@ const recipeSchema = new mongoose.Schema({
       ref: 'review',
     },
   ],
+  categories: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: 'category',
+    },
+  ],
 });
 
 const Recipe = mongoose.model('recipe', recipeSchema);

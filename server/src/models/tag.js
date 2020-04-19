@@ -1,12 +1,13 @@
 const mongoose = require('mongoose');
 
-const toolSchema = new mongoose.Schema({
-  tagName: {
+const tagSchema = new mongoose.Schema({
+  name: {
     type: String,
     required: true,
+    unique: true,
   },
 });
 
-const Tool = mongoose.model('tool', toolSchema);
+const Tag = mongoose.model('tag', tagSchema);
 
-module.exports = Tool;
+module.exports = Tag;

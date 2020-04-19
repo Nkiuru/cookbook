@@ -4,6 +4,7 @@ const unitSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
+    unique: true,
   },
   class: {
     type: String,
