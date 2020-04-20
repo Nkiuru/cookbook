@@ -1,8 +1,4 @@
-const {
-  gql,
-  SchemaDirectiveVisitor,
-  AuthenticationError,
-} = require('apollo-server-express');
+const { gql, SchemaDirectiveVisitor, AuthenticationError } = require('apollo-server-express');
 const { defaultFieldResolver } = require('graphql');
 
 const typeDef = gql`
