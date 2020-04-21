@@ -94,6 +94,7 @@ const recipeSchema = new mongoose.Schema({
   difficulty: {
     type: String,
     enum: Object.keys(difficulty),
+    required: true,
   },
   portions: {
     type: Number,

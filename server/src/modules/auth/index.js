@@ -34,6 +34,8 @@ const typeDefs = gql`
     created: DateTime!
     lastActive: DateTime!
     changed: DateTime!
+    lists: [List]
+    followedLists: [List]
   }
 `;
 
