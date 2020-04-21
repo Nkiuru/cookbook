@@ -11,7 +11,7 @@ const DateTime = new GraphQLScalarType({
   parseValue(value) {
     return value;
   },
-  serialze(value) {
+  serialize(value) {
     return value;
   },
   parseLiteral(ast) {
