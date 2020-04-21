@@ -8,7 +8,7 @@ const unitSchema = new mongoose.Schema({
   },
   class: {
     type: String,
-    enum: ['mass', 'volume', 'distance'],
+    enum: ['MASS', 'VOLUME', 'DISTANCE'],
     required: true,
   },
   metric: {

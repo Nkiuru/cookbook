@@ -9,6 +9,15 @@ const typeDefs = gql`
   extend type Mutation {
 
   }
+
+  type List {
+    name: String!
+    owner: User!
+    tags: [Tag]
+    categories: [Category]
+    recipes: [Recipe]
+    followers: [User]
+  }
 `;
 
 const resolvers = require('./resolvers');

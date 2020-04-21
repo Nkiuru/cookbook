@@ -9,6 +9,14 @@ const typeDefs = gql`
   extend type Mutation {
 
   }
+
+  type Review {
+    user: User!
+    recipe: Recipe!
+    content: String!
+    created: DateTime
+    updateAt: DateTime
+  }
 `;
 
 const resolvers = require('./resolvers');

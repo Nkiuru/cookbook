@@ -140,6 +140,9 @@ const recipeSchema = new mongoose.Schema({
       ref: 'list',
     },
   ],
+  notes: {
+    type: String,
+  },
 });
 
 const Recipe = mongoose.model('recipe', recipeSchema);

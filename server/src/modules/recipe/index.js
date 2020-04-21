@@ -25,6 +25,7 @@ const typeDefs = gql`
     changed: DateTime
     originalAuthor: User
     author: User
+    notes: String
     tags: [Tag]
     reviews: [Review]
     categories: [Category]

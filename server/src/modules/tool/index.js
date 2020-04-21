@@ -8,6 +8,11 @@ const typeDefs = gql`
   extend type Mutation {
 
   }
+
+  type Tool {
+    name: String!
+    image: String
+  }
 `;
 
 const resolvers = require('./resolvers');

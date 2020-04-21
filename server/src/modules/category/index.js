@@ -9,6 +9,10 @@ const typeDefs = gql`
   extend type Mutation {
 
   }
+
+  type Category {
+    name: String!
+  }
 `;
 
 const resolvers = require('./resolvers');

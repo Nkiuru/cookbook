@@ -9,6 +9,23 @@ const typeDefs = gql`
   extend type Mutation {
 
   }
+
+  type Ingredient {
+    name: String!
+  }
+
+  type Unit {
+    name: String!
+    class: Class!
+    metric: Boolean
+    factor: Float!
+  }
+
+  enum Class {
+    MASS
+    VOLUME
+    DISTANCE
+  }
 `;
 
 const resolvers = require('./resolvers');
