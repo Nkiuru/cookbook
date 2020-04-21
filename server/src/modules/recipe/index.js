@@ -46,12 +46,26 @@ const typeDefs = gql`
   type RecipeIngredient {
     amount: Float!
     unit: Unit!
-    ingredient Ingredient
+    ingredient: Ingredient
   }
 
   type Equipment {
     amount: Float!
     tool: Tool!
+  }
+
+  type Rating {
+    user: User!
+    recipe: Recipe!
+    score: Int!
+  }
+
+  enum Difficulty {
+    BEGINNER
+    NOVICE
+    INTERMEDIATE
+    EXPERIENCED
+    ADVANCED
   }
 `;
 
