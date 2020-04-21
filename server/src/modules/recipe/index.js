@@ -12,8 +12,8 @@ const typeDefs = gql`
   type Recipe {
     id: String!
     description: String!
-    equipment: [Tool]!
-    ingredients: [Ingredient]!
+    equipment: [Equipment]!
+    ingredients: [RecipeIngredient]!
     instructions: [Instruction]!
     images: [Image]!
     calories: Int!
@@ -29,6 +29,29 @@ const typeDefs = gql`
     reviews: [Review]
     categories: [Category]
     lists: [List]
+  }
+
+  type Instruction {
+    step: String!
+    text: String!
+    image: String
+  }
+
+  type Image {
+    image: String!
+    primary: Boolean
+    altText: String
+  }
+
+  type RecipeIngredient {
+    amount: Float!
+    unit: Unit!
+    ingredient Ingredient
+  }
+
+  type Equipment {
+    amount: Float!
+    tool: Tool!
   }
 `;
 
