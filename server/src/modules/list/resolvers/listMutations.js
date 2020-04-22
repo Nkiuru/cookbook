@@ -6,13 +6,13 @@ const Category = require('../../../models/category');
 const createList = async (_, args, { user }) => {
   args.owner = user.id;
   let list = await List.create(args);
-  list = await list.populate('owner tags categories recipes followers').execPopulate();
-  return list;
+  return await list.populate('owner tags categories recipes followers').execPopulate();
 };
 
 const modifyList = async (_, args) => {
   console.log(args);
-  return await List.findByIdAndUpdate(args.id, args, { new: true });
+  const list = await List.findByIdAndUpdate(args.id, args, { new: true });
+  return await list.populate('owner tags categories recipes followers').execPopulate();
 };
 
 const deleteList = async (_, args) => {
@@ -23,23 +23,32 @@ const deleteList = async (_, args) => {
 
 const addRecipeToList = async (_, { id, recipe }) => {
   const r = Recipe.findOne(recipe);
-  return r
-    ? await List.findByIdAndUpdate(id, { $push: { recipes: recipe } })
-    : { success: false, message: `Recipe does not exist` };
+  const list = await List.findByIdAndUpdate(id, { $push: { recipes: recipe } });
+  return {
+    success: list && r,
+    message: 'Tag added',
+    list: r ? await list.populate('owner tags categories recipes followers').execPopulate() : null,
+  };
 };
 
 const addTagToList = async (_, { id, tag }) => {
   const t = Tag.findOne(tag);
-  return t
-    ? await List.findByIdAndUpdate(id, { $push: { tags: tag } })
-    : { success: false, message: `Tag does not exist` };
+  const list = await List.findByIdAndUpdate(id, { $push: { tags: tag } });
+  return {
+    success: list && t,
+    message: 'Tag added',
+    list: t ? await list.populate('owner tags categories recipes followers').execPopulate() : null,
+  };
 };
 
 const addCategoryToList = async (_, { id, category }) => {
   const c = Category.findOne(category);
-  return c
-    ? await List.findByIdAndUpdate(id, { $push: { categories: category } })
-    : { success: false, message: `Recipe does not exist` };
+  const list = await List.findByIdAndUpdate(id, { $push: { categories: category } });
+  return {
+    success: list && c,
+    message: 'Category added',
+    list: c ? await list.populate('owner tags categories recipes followers').execPopulate() : null,
+  };
 };
 
 module.exports = {
