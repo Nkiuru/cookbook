@@ -1,6 +1,6 @@
 const resolvers = {
-  Query: {},
-  Mutation: {},
+  Query: require('./listQueries'),
+  Mutation: require('./listMutations'),
 };
 
 module.exports = resolvers;

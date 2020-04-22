@@ -36,6 +36,7 @@ const listSchema = new mongoose.Schema({
   ],
 });
 
+listSchema.index({ name: 'text' });
 const List = mongoose.model('list', listSchema);
 
 module.exports = List;
