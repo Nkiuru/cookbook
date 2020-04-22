@@ -3,9 +3,11 @@ const Recipe = require('../../../models/recipe');
 const Tag = require('../../../models/tag');
 const Category = require('../../../models/category');
 
-const createList = async (_, args) => {
-  console.log(args);
-  return List.create(args);
+const createList = async (_, args, { user }) => {
+  args.owner = user.id;
+  let list = await List.create(args);
+  list = await list.populate('owner tags categories recipes followers').execPopulate();
+  return list;
 };
 
 const modifyList = async (_, args) => {
