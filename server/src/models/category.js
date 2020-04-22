@@ -6,6 +6,12 @@ const categorySchema = new mongoose.Schema({
     unique: true,
     required: true,
   },
+  recipes: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: 'recipe',
+    },
+  ],
 });
 
 const Category = mongoose.model('category', categorySchema);

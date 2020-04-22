@@ -1,4 +1,4 @@
-export const difficulty = {
+module.exports = {
   BEGINNER: 'Beginner',
   NOVICE: 'Novice',
   INTERMEDIATE: 'Intermediate',

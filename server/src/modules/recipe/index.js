@@ -1,16 +1,9 @@
 const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
-  extend type Query {
-
-  }
-
-  extend type Mutation {
-
-  }
-
   type Recipe {
     id: String!
+    title: String!
     description: String!
     equipment: [Equipment]!
     ingredients: [RecipeIngredient]!

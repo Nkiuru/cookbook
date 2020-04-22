@@ -2,14 +2,6 @@ const { gql } = require('apollo-server-express');
 
 //TODO: Implement review CRUD resolvers & review type
 const typeDefs = gql`
-  extend type Query {
-
-  }
-
-  extend type Mutation {
-
-  }
-
   type Review {
     user: User!
     recipe: Recipe!
