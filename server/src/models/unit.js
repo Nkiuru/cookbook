@@ -1,3 +1,4 @@
+/*
 const mongoose = require('mongoose');
 
 const unitSchema = new mongoose.Schema({
@@ -30,3 +31,4 @@ unitSchema.index({ name: 'text' });
 const Unit = mongoose.model('unit', unitSchema);
 
 module.exports = Unit;
+*/

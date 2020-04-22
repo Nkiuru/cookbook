@@ -6,7 +6,7 @@ const typeDefs = gql`
     title: String!
     description: String!
     equipment: [Equipment]!
-    ingredients: [RecipeIngredient]!
+    ingredients: [Ingredient]!
     instructions: [Instruction]!
     images: [Image]!
     calories: Int!
@@ -37,10 +37,9 @@ const typeDefs = gql`
     altText: String
   }
 
-  type RecipeIngredient {
-    amount: Float!
-    unit: Unit!
-    ingredient: Ingredient
+  type Ingredient {
+    amount: String!
+    ingredient: String!
   }
 
   type Equipment {
