@@ -5,12 +5,19 @@ const createCategory = async (_, args) => {
   console.log(args);
   const cat = await Category.create(args);
   console.log(cat);
-  return cat;
+  return {
+    ...cat._doc,
+    id: cat.id,
+  };
 };
 
 const modifyCategory = async (_, args) => {
   console.log(args);
-  return await Category.findByIdAndUpdate(args.id, { args });
+  const cat = await Category.findByIdAndUpdate(args.id, args);
+  return {
+    ...cat._doc,
+    id: cat.id,
+  };
 };
 
 const deleteCategory = async (_, args) => {

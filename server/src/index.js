@@ -14,6 +14,7 @@ const startServer = async () => {
     useNewUrlParser: true,
     promiseLibrary: global.Promise,
     useUnifiedTopology: true,
+    useFindAndModify: false,
   };
   try {
     await Promise.all([mongoose.connect(config.DB_URL, mongooseOptions)]);

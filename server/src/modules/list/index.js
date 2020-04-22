@@ -3,6 +3,7 @@ const { gql } = require('apollo-server-express');
 //TODO: Implement list CRUD & add recipe to list resolvers & list type
 const typeDefs = gql`
   type List {
+    id: String!
     name: String!
     owner: User!
     tags: [Tag]

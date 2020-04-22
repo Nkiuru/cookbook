@@ -3,10 +3,12 @@ const { gql } = require('apollo-server-express');
 //TODO: Implement ingredient CRUD resolvers & ingredient type
 const typeDefs = gql`
   type Ingredient {
+    id: String!
     name: String!
   }
 
   type Unit {
+    id: String!
     name: String!
     class: Class!
     metric: Boolean
