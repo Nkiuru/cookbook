@@ -13,7 +13,7 @@ const createCategory = async (_, args) => {
 
 const modifyCategory = async (_, args) => {
   console.log(args);
-  const cat = await Category.findByIdAndUpdate(args.id, args);
+  const cat = await Category.findByIdAndUpdate(args.id, args, { new: true });
   return {
     ...cat._doc,
     id: cat.id,

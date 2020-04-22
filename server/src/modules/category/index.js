@@ -5,7 +5,6 @@ const typeDefs = gql`
   extend type Query {
     getCategories: [Category]
     getCategory(id: String!): Category
-    getRecipesByCategory(id: String!): [Recipe]
   }
 
   extend type Mutation {
