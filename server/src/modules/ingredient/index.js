@@ -1,6 +1,5 @@
 const { gql } = require('apollo-server-express');
 
-//TODO: Implement ingredient CRUD resolvers & ingredient type
 const typeDefs = gql`
   extend type Query {
     getIngredient(id: String!): Ingredient
@@ -13,8 +12,8 @@ const typeDefs = gql`
     createIngredient(name: String): Ingredient @isAuthenticated
     modifyIngredient(id: String!, name: String): Ingredient @isAuthenticated
     deleteIngredient(id: String!): String @isAuthenticated
-    createUnit(name: String, class: Class, metric: Boolean, factor: Float): Ingredient @isAuthenticated
-    modifyUnit(name: String, class: Class, metric: Boolean, factor: Float): Ingredient @isAuthenticated
+    createUnit(name: String!, symbol: String!, class: Class!, metric: Boolean!, factor: Float!): Unit @isAuthenticated
+    modifyUnit(id: String!, name: String, class: Class, metric: Boolean, factor: Float): Unit @isAuthenticated
     deleteUnit(id: String!): String @isAuthenticated
   }
 
@@ -26,6 +25,7 @@ const typeDefs = gql`
   type Unit {
     id: String!
     name: String!
+    symbol: String!
     class: Class!
     metric: Boolean
     factor: Float!

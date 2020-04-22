@@ -1,6 +1,5 @@
 const { gql } = require('apollo-server-express');
 
-//TODO: Implement category CRUD resolvers & category type
 const typeDefs = gql`
   extend type Query {
     getCategories: [Category]

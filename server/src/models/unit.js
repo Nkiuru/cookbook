@@ -6,6 +6,11 @@ const unitSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  symbol: {
+    type: String,
+    required: true,
+    unique: true,
+  },
   class: {
     type: String,
     enum: ['MASS', 'VOLUME', 'DISTANCE'],
@@ -21,6 +26,7 @@ const unitSchema = new mongoose.Schema({
   },
 });
 
+unitSchema.index({ name: 'text' });
 const Unit = mongoose.model('unit', unitSchema);
 
 module.exports = Unit;

@@ -12,7 +12,7 @@ const modifyIngredient = async (_, args) => {
 };
 
 const deleteIngredient = async (_, args) => {
-  const usedInRecipe = Recipe.find({ ingredients: { $in: [args.id] } }).length > 0;
+  const usedInRecipe = Recipe.find({ 'ingredients.ingredient': { $in: [args.id] } }).length > 0;
   if (usedInRecipe) {
     throw `Used in recipes, ${args.id} cannot be deleted`;
   } else {
