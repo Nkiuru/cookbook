@@ -17,6 +17,11 @@ const typeDefs = gql`
     name: String!
     recipes: [Recipe]
   }
+
+  input CategoryInput {
+    name: String!
+    recipes: [String]
+  }
 `;
 
 const resolvers = require('./resolvers');

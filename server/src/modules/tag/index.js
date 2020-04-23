@@ -18,6 +18,11 @@ const typeDefs = gql`
     name: String!
     recipes: [Recipe]
   }
+
+  input TagInput {
+    name: String!
+    recipes: [String]
+  }
 `;
 
 const resolvers = require('./resolvers');

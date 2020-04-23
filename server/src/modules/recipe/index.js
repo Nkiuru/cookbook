@@ -1,6 +1,28 @@
 const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
+  extend type Query {
+    getRecipe(id: String!): Recipe
+    getRecipes(
+      searchTerm: String
+      ingredients: String
+      category: [String]
+      tag: [String]
+      list: String
+      difficulty: Difficulty
+      author: String
+      rating: Int
+      portions: Int
+    ): [Recipe]
+  }
+
+  extend type Mutation {
+    createRecipe(recipe: RecipeInput!): Recipe @isAuthenticated
+    modifyRecipe(recipe: RecipeInputModify!): Recipe @isAuthenticated
+    deleteRecipe(id: String!): String @isAuthenticated
+    cloneRecipe(id: String!): Recipe
+  }
+
   type Recipe {
     id: String!
     title: String!
@@ -26,7 +48,7 @@ const typeDefs = gql`
   }
 
   type Instruction {
-    step: String!
+    step: Int!
     text: String!
     image: String
   }
@@ -64,6 +86,66 @@ const typeDefs = gql`
     INTERMEDIATE
     EXPERIENCED
     ADVANCED
+  }
+
+  input RecipeInput {
+    title: String!
+    description: String!
+    equipment: [EquipmentInput]!
+    ingredients: [IngredientInput]!
+    instructions: [InstructionInput]!
+    images: [ImageInput]!
+    calories: Int
+    cookingTime: String
+    difficulty: Difficulty
+    portions: Int
+    author: String!
+    notes: String
+    tags: [TagInput]
+    categories: [CategoryInput]
+  }
+
+  input EquipmentInput {
+    amount: Float!
+    tool: ToolInput!
+  }
+
+  input ToolInput {
+    name: String!
+    image: String
+  }
+
+  input IngredientInput {
+    amount: String!
+    ingredient: String!
+  }
+
+  input InstructionInput {
+    step: Int!
+    text: String!
+    image: String
+  }
+
+  input ImageInput {
+    image: String!
+    primary: Boolean
+    altText: String
+  }
+
+  input RecipeInputModify {
+    title: String!
+    description: String!
+    equipment: [EquipmentInput]!
+    ingredients: [IngredientInput]!
+    instructions: [InstructionInput]!
+    images: [ImageInput]!
+    calories: Int
+    cookingTime: String
+    difficulty: Difficulty
+    portions: Int
+    notes: String
+    tags: [TagInput]
+    categories: [CategoryInput]
   }
 `;
 
