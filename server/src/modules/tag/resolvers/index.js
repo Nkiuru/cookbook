@@ -1,6 +1,6 @@
 const resolvers = {
-  Query: {},
-  Mutation: {},
+  Query: require('./tagQueries'),
+  Mutation: require('./tagMutations'),
 };
 
 module.exports = resolvers;

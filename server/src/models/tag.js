@@ -6,6 +6,12 @@ const tagSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  recipes: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: 'recipe',
+    },
+  ],
 });
 
 const Tag = mongoose.model('tag', tagSchema);
