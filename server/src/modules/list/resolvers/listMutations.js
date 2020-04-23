@@ -23,32 +23,34 @@ const deleteList = async (_, args) => {
 
 const addRecipeToList = async (_, { id, recipe }) => {
   const r = Recipe.findOne(recipe);
-  const list = await List.findByIdAndUpdate(id, { $push: { recipes: recipe } });
-  return {
-    success: list && r,
-    message: 'Tag added',
-    list: r ? await list.populate('owner tags categories recipes followers').execPopulate() : null,
-  };
+  if (r) {
+    const list = await List.findByIdAndUpdate(id, { $push: { recipes: recipe } });
+    r.lists.push(list.id);
+    await r.save();
+    return await list.populate('owner tags categories recipes followers').execPopulate();
+  } else {
+    throw 'Recipe does not exist';
+  }
 };
 
 const addTagToList = async (_, { id, tag }) => {
   const t = Tag.findOne(tag);
-  const list = await List.findByIdAndUpdate(id, { $push: { tags: tag } });
-  return {
-    success: list && t,
-    message: 'Tag added',
-    list: t ? await list.populate('owner tags categories recipes followers').execPopulate() : null,
-  };
+  if (t) {
+    const list = await List.findByIdAndUpdate(id, { $push: { tags: tag } });
+    return await list.populate('owner tags categories recipes followers').execPopulate();
+  } else {
+    throw 'Tag does not exist';
+  }
 };
 
 const addCategoryToList = async (_, { id, category }) => {
   const c = Category.findOne(category);
-  const list = await List.findByIdAndUpdate(id, { $push: { categories: category } });
-  return {
-    success: list && c,
-    message: 'Category added',
-    list: c ? await list.populate('owner tags categories recipes followers').execPopulate() : null,
-  };
+  if (c) {
+    const list = await List.findByIdAndUpdate(id, { $push: { categories: category } });
+    return await list.populate('owner tags categories recipes followers').execPopulate();
+  } else {
+    throw 'Category does not exist';
+  }
 };
 
 module.exports = {

@@ -11,15 +11,9 @@ const typeDefs = gql`
     createList(name: String!, tags: [String], categories: [String], recipes: [String]): List
     modifyList(id: String!, name: String, tags: [String], categories: [String], recipes: [String]): List
     deleteList(id: String!): String
-    addRecipeToList(id: String!, recipe: String!): ListData
-    addTagToList(id: String, tag: String!): ListData
-    addCategoryToList(id: String, category: String!): ListData
-  }
-
-  type ListData {
-    list: List
-    message: String!
-    success: Boolean!
+    addRecipeToList(id: String!, recipe: String!): List
+    addTagToList(id: String, tag: String!): List
+    addCategoryToList(id: String, category: String!): List
   }
 
   type List {
