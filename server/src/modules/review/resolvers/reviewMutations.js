@@ -15,6 +15,7 @@ const modifyReview = async (_, args) => {
   if (args.recipe && !(await Recipe.findOne(args.recipe))) {
     throw 'Recipe does not exist';
   }
+  args.updatedAt = Date.now();
   const review = await Review.findByIdAndUpdate(args.id, args, { new: true });
   return await review.populate('user recipe').execPopulate();
 };
