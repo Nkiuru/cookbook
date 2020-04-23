@@ -1,6 +1,6 @@
 const resolvers = {
-  Query: {},
-  Mutation: {},
+  Query: require('./reviewQueries'),
+  Mutation: require('./reviewMutations'),
 };
 
 module.exports = resolvers;
