@@ -1,3 +1,4 @@
+/*
 const { gql } = require('apollo-server-express');
 //TODO: Implement tool CRUD resolvers & tool type
 const typeDefs = gql`
@@ -14,3 +15,4 @@ module.exports = {
   typeDefs: [typeDefs],
   resolvers,
 };
+*/

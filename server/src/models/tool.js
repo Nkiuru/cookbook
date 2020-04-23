@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+/*const mongoose = require('mongoose');
 
 const toolSchema = new mongoose.Schema({
   name: {
@@ -13,4 +13,4 @@ const toolSchema = new mongoose.Schema({
 
 const Tool = mongoose.model('tool', toolSchema);
 
-module.exports = Tool;
+module.exports = Tool;*/

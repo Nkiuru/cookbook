@@ -19,8 +19,13 @@ const recipeSchema = new mongoose.Schema({
         required: true,
       },
       tool: {
-        type: mongoose.Types.ObjectId,
-        ref: 'tool',
+        name: {
+          type: String,
+          required: true,
+        },
+        image: {
+          type: String,
+        },
         required: true,
       },
     },

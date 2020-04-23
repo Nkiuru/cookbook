@@ -47,6 +47,11 @@ const typeDefs = gql`
     tool: Tool!
   }
 
+  type Tool {
+    name: String!
+    image: String
+  }
+
   type Rating {
     user: User!
     recipe: Recipe!
