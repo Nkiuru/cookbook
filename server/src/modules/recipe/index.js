@@ -13,6 +13,8 @@ const typeDefs = gql`
       author: String
       rating: Int
       portions: Int
+      startPoint: Int
+      endPoint: Int
     ): [Recipe]
   }
 

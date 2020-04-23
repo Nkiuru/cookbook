@@ -1,6 +1,6 @@
 const resolvers = {
-  Query: {},
-  Mutation: {},
+  Query: require('./recipeQueries'),
+  Mutation: require('./recipeMutations'),
 };
 
 module.exports = resolvers;
