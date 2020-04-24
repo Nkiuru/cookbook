@@ -10,6 +10,7 @@ const server = new ApolloServer({
   context: async ({ req }) => ({
     user: await context.getUser(req),
   }),
+  uploads: true,
 });
 
 const app = express();

@@ -3,10 +3,13 @@ const File = require('../../../models/file');
 const { processUpload } = require('../../../utils/upload');
 
 const populateRecipe = async recipe => {
-  return recipe.populate('rating originalAuthor author reviews categories lists images.image');
+  return recipe
+    .populate('rating originalAuthor author reviews categories lists images.file instructions.image')
+    .execPopulate();
 };
 
 const createRecipe = async (_, args, { user }) => {
+  args = args.recipe;
   args.author = user.id;
   args.originalAuthor = user.id;
   const files = args.images;
@@ -17,9 +20,15 @@ const createRecipe = async (_, args, { user }) => {
     image.file = file.id;
     args.images.push(image);
   }
-  console.log(args);
-  const recipe = Recipe.create(args);
-  return populateRecipe(recipe);
+  const instructions = args.instructions;
+  args.instructions = [];
+  for await (const instruction of instructions) {
+    const upload = await processUpload(instruction.image);
+    const file = await File.create(upload);
+    instruction.image = file.id;
+    args.instructions.push(instruction);
+  }
+  return await populateRecipe(await Recipe.create(args));
 };
 
 const modifyRecipe = async (_, args) => {};

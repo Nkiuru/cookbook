@@ -14,7 +14,7 @@ const recipeSchema = new mongoose.Schema({
   equipment: [
     {
       amount: {
-        type: Number,
+        type: String,
         min: 0,
         required: true,
       },

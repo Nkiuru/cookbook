@@ -23,7 +23,7 @@ const typeDefs = gql`
     createRecipe(recipe: RecipeInput!): Recipe @isAuthenticated
     modifyRecipe(recipe: RecipeInputModify!): Recipe @isAuthenticated
     deleteRecipe(id: ID!): String @isAuthenticated
-    cloneRecipe(id: ID!): Recipe
+    cloneRecipe(id: ID!): Recipe @isAuthenticated
   }
 
   type Recipe {
@@ -51,7 +51,7 @@ const typeDefs = gql`
   }
 
   type File {
-    id: ID!
+    _id: ID!
     filename: String!
     mimetype: String!
     path: String!
@@ -60,7 +60,7 @@ const typeDefs = gql`
   type Instruction {
     step: Int!
     text: String!
-    image: String
+    image: File
   }
 
   type Image {
@@ -96,22 +96,21 @@ const typeDefs = gql`
   input RecipeInput {
     title: String!
     description: String!
-    equipment: [EquipmentInput]!
-    ingredients: [IngredientInput]!
-    instructions: [InstructionInput]!
-    images: [ImageInput]!
+    equipment: [EquipmentInput!]!
+    ingredients: [IngredientInput!]!
+    instructions: [InstructionInput!]!
+    images: [ImageInput!]!
     calories: Int
     cookingTime: String
     difficulty: Difficulty
     portions: Int
-    author: String!
     notes: String
-    tags: [TagInput]
-    categories: [CategoryInput]
+    tags: [TagInput!]
+    categories: [CategoryInput!]
   }
 
   input EquipmentInput {
-    amount: Float!
+    amount: String!
     name: String!
   }
 
@@ -123,7 +122,7 @@ const typeDefs = gql`
   input InstructionInput {
     step: Int!
     text: String!
-    image: String
+    image: Upload
   }
 
   input ImageInput {

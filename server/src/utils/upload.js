@@ -1,8 +1,8 @@
-const { createWriteStream } = require('fs');
+const { createWriteStream, mkdir } = require('fs');
 const mongoose = require('mongoose');
 
 const storeUpload = async ({ stream, filename, mimetype }) => {
-  const id = mongoose.Types.ObjectId();
+  const id = new mongoose.mongo.ObjectId().toString();
   const path = `uploads/${id}-${filename}`;
   return new Promise((resolve, reject) =>
     stream
@@ -13,6 +13,9 @@ const storeUpload = async ({ stream, filename, mimetype }) => {
 };
 
 const processUpload = async upload => {
+  mkdir('uploads', { recursive: true }, err => {
+    if (err) throw err;
+  });
   const { createReadStream, filename, mimetype } = await upload;
   const stream = createReadStream();
   return await storeUpload({ stream, filename, mimetype });

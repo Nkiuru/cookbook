@@ -6,7 +6,7 @@ const http = require('http');
 const fs = require('fs');
 const app = require('./app.js');
 const config = require('./config.js');
-
+require('./models/rating');
 const mongoHost = new url.URL(config.DB_URL).host;
 
 const startServer = async () => {
