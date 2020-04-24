@@ -1,5 +1,5 @@
 const express = require('express');
-
+const path = require('path');
 const { ApolloServer } = require('apollo-server-express');
 
 const context = require('./utils/context');
@@ -16,8 +16,9 @@ const server = new ApolloServer({
 const app = express();
 
 server.applyMiddleware({
-  path: '/',
+  path: '/graphql',
   app,
 });
+app.use('/static', express.static(path.join(__dirname, '../uploads')));
 
 module.exports = app;
