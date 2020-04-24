@@ -4,20 +4,20 @@ const { gql } = require('apollo-server-express');
 const typeDefs = gql`
   extend type Query {
     getLists(searchTerm: String): [List]
-    getList(id: String!): List
+    getList(id: ID!): List
   }
 
   extend type Mutation {
-    createList(name: String!, tags: [String], categories: [String], recipes: [String]): List
-    modifyList(id: String!, name: String, tags: [String], categories: [String], recipes: [String]): List
-    deleteList(id: String!): String
-    addRecipeToList(id: String!, recipe: String!): List
-    addTagToList(id: String, tag: String!): List
-    addCategoryToList(id: String, category: String!): List
+    createList(name: String!, tags: [ID], categories: [ID], recipes: [ID]): List
+    modifyList(id: ID!, name: String, tags: [ID], categories: [ID], recipes: [ID]): List
+    deleteList(id: ID!): String
+    addRecipeToList(id: ID!, recipe: ID!): List
+    addTagToList(id: ID!, tag: ID!): List
+    addCategoryToList(id: ID! category: ID!): List
   }
 
   type List {
-    id: String!
+    id: ID!
     name: String!
     owner: User!
     tags: [Tag]

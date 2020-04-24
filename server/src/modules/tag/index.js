@@ -4,17 +4,17 @@ const { gql } = require('apollo-server-express');
 const typeDefs = gql`
   extend type Query {
     getTags(searchTerm: String): [Tag]
-    getTag(id: String!): Tag
+    getTag(id: ID!): Tag
   }
 
   extend type Mutation {
-    createTag(name: String!, recipes: [String]): Tag @isAuthenticated
-    modifyTag(id: String!, name: String, recipes: [String]): Tag @isAuthenticated
-    deleteTag(id: String!): String @isAuthenticated
+    createTag(name: String!, recipes: [ID]): Tag @isAuthenticated
+    modifyTag(id: ID!, name: String, recipes: [ID]): Tag @isAuthenticated
+    deleteTag(id: ID!): String @isAuthenticated
   }
 
   type Tag {
-    id: String!
+    id: ID!
     name: String!
     recipes: [Recipe]
   }

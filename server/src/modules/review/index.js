@@ -3,18 +3,18 @@ const { gql } = require('apollo-server-express');
 //TODO: Implement review CRUD resolvers & review type
 const typeDefs = gql`
   extend type Query {
-    getReview(id: String!): Review
-    getReviews(userId: String!): [Review]
+    getReview(id: ID!): Review
+    getReviews(userId: ID!): [Review]
   }
 
   extend type Mutation {
-    createReview(recipe: String!, content: String!): Review @isAuthenticated
-    modifyReview(id: String!, content: String!): Review @isAuthenticated
-    deleteReview(id: String!): String @isAuthenticated
+    createReview(recipe: ID!, content: String!): Review @isAuthenticated
+    modifyReview(id: ID!, content: String!): Review @isAuthenticated
+    deleteReview(id: ID!): String @isAuthenticated
   }
 
   type Review {
-    id: String!
+    id: ID!
     user: User!
     recipe: Recipe!
     content: String!

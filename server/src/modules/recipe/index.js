@@ -2,7 +2,7 @@ const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
   extend type Query {
-    getRecipe(id: String!): Recipe
+    getRecipe(id: ID!): Recipe
     getRecipes(
       searchTerm: String
       ingredients: String
@@ -21,12 +21,12 @@ const typeDefs = gql`
   extend type Mutation {
     createRecipe(recipe: RecipeInput!): Recipe @isAuthenticated
     modifyRecipe(recipe: RecipeInputModify!): Recipe @isAuthenticated
-    deleteRecipe(id: String!): String @isAuthenticated
-    cloneRecipe(id: String!): Recipe
+    deleteRecipe(id: ID!): String @isAuthenticated
+    cloneRecipe(id: ID!): Recipe
   }
 
   type Recipe {
-    id: String!
+    id: ID!
     title: String!
     description: String!
     equipment: [Equipment]!
