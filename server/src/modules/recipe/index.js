@@ -1,6 +1,7 @@
 const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
+  scalar Upload
   extend type Query {
     getRecipe(id: ID!): Recipe
     getRecipes(
@@ -49,6 +50,13 @@ const typeDefs = gql`
     lists: [List]
   }
 
+  type File {
+    id: ID!
+    filename: String!
+    mimetype: String!
+    path: String!
+  }
+
   type Instruction {
     step: Int!
     text: String!
@@ -56,7 +64,7 @@ const typeDefs = gql`
   }
 
   type Image {
-    image: String!
+    file: File!
     primary: Boolean
     altText: String
   }
@@ -68,12 +76,7 @@ const typeDefs = gql`
 
   type Equipment {
     amount: Float!
-    tool: Tool!
-  }
-
-  type Tool {
     name: String!
-    image: String
   }
 
   type Rating {
@@ -109,12 +112,7 @@ const typeDefs = gql`
 
   input EquipmentInput {
     amount: Float!
-    tool: ToolInput!
-  }
-
-  input ToolInput {
     name: String!
-    image: String
   }
 
   input IngredientInput {
@@ -129,7 +127,7 @@ const typeDefs = gql`
   }
 
   input ImageInput {
-    image: String!
+    file: Upload!
     primary: Boolean
     altText: String
   }

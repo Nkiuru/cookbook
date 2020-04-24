@@ -18,15 +18,9 @@ const recipeSchema = new mongoose.Schema({
         min: 0,
         required: true,
       },
-      tool: {
-        name: {
-          type: String,
-          required: true,
-        },
-        image: {
-          type: mongoose.Types.ObjectId,
-          ref: 'file',
-        },
+      name: {
+        type: String,
+        required: true,
       },
     },
   ],
@@ -61,7 +55,7 @@ const recipeSchema = new mongoose.Schema({
   ],
   images: [
     {
-      image: {
+      file: {
         type: mongoose.Types.ObjectId,
         ref: 'file',
         required: true,

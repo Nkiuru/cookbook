@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 const storeUpload = async ({ stream, filename, mimetype }) => {
   const id = mongoose.Types.ObjectId();
-  const path = `images/${id}-${filename}`;
+  const path = `uploads/${id}-${filename}`;
   return new Promise((resolve, reject) =>
     stream
       .pipe(createWriteStream(path))
