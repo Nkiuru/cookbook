@@ -24,7 +24,8 @@ const recipeSchema = new mongoose.Schema({
           required: true,
         },
         image: {
-          type: String,
+          type: mongoose.Types.ObjectId,
+          ref: 'file',
         },
       },
     },
@@ -53,14 +54,16 @@ const recipeSchema = new mongoose.Schema({
         required: true,
       },
       image: {
-        type: String,
+        type: mongoose.Types.ObjectId,
+        ref: 'file',
       },
     },
   ],
   images: [
     {
       image: {
-        type: String,
+        type: mongoose.Types.ObjectId,
+        ref: 'file',
         required: true,
       },
       primary: {
