@@ -1,6 +1,7 @@
 const Recipe = require('../../../models/recipe');
 const File = require('../../../models/file');
 const { processUpload } = require('../../../utils/upload');
+const mongoose = require('mongoose');
 
 const populateRecipe = async recipe => {
   return recipe
@@ -33,7 +34,17 @@ const createRecipe = async (_, args, { user }) => {
 
 const modifyRecipe = async (_, args) => {};
 const deleteRecipe = async (_, args) => {};
-const cloneRecipe = async (_, args, { user }) => {};
+const cloneRecipe = async (_, { id }, { user }) => {
+  const recipe = await Recipe.findById(id);
+  if (!recipe) {
+    throw 'Recipe does not exist';
+  }
+  recipe._doc._id = mongoose.Types.ObjectId();
+  recipe.author = user.id;
+  recipe.isNew = true;
+  recipe.save();
+  return populateRecipe(recipe);
+};
 
 module.exports = {
   createRecipe,
