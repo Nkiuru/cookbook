@@ -8,6 +8,9 @@ const getUser = async req => {
     return null;
   }
   const tokenHeader = req.get(TOKEN_HEADER_NAME);
+  if (!tokenHeader) {
+    return null;
+  }
   const token = tokenHeader.split(' ')[1];
   if (!token) {
     return null;
@@ -15,8 +18,7 @@ const getUser = async req => {
 
   try {
     const decodedToken = await tokenUtil.getDecodedToken(token);
-    const user = await User.findById(decodedToken.userId);
-    return user;
+    return await User.findById(decodedToken.userId);
   } catch (e) {
     return null;
   }
