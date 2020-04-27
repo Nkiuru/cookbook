@@ -1,5 +1,7 @@
 const Recipe = require('../../../models/recipe');
 const File = require('../../../models/file');
+const Tag = require('../../../models/tag');
+const Category = require('../../../models/category');
 const { processUpload } = require('../../../utils/upload');
 const mongoose = require('mongoose');
 const { merge } = require('lodash-es');
@@ -30,11 +32,32 @@ const createFiles = async recipe => {
   return recipe;
 };
 
+const addRecipeToTags = async recipe => {
+  return Tag.update({ _id: { $in: recipe.tags } }, { $addToSet: { recipes: recipe.id } });
+};
+
+const addRecipeToCategories = async recipe => {
+  return Category.update({ _id: { $in: recipe.categories } }, { $addToSet: { recipes: recipe.id } });
+};
+
+const removeRecipeFromCategories = async (recipe, categories) => {
+  return Category.update({ _id: { $in: categories } }, { $pull: { recipes: recipe.id } });
+};
+const removeRecipeFromTags = async (recipe, tags) => {
+  return Tag.update({ _id: { $in: tags } }, { $pull: { recipes: recipe.id } });
+};
+
 const createRecipe = async (_, args, { user }) => {
   args = args.recipe;
   args.author = user.id;
   args.originalAuthor = user.id;
   args = await createFiles(args);
+  if (args.tags && args.tags.length > 0) {
+    args = await addRecipeToTags(args);
+  }
+  if (args.categories && args.categories.length > 0) {
+    args = await addRecipeToCategories(args);
+  }
   return await populateRecipe(await Recipe.create(args));
 };
 
