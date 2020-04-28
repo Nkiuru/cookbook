@@ -6,12 +6,12 @@ const tagSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  recipes: [
-    {
-      type: mongoose.Types.ObjectId,
-      ref: 'recipe',
-    },
-  ],
+});
+
+tagSchema.virtual('recipes', {
+  ref: 'recipe',
+  localField: '_id',
+  foreignField: 'tags',
 });
 
 const Tag = mongoose.model('tag', tagSchema);

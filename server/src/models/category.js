@@ -6,14 +6,13 @@ const categorySchema = new mongoose.Schema({
     unique: true,
     required: true,
   },
-  recipes: [
-    {
-      type: mongoose.Types.ObjectId,
-      ref: 'recipe',
-    },
-  ],
 });
 
+categorySchema.virtual('recipes', {
+  ref: 'recipe',
+  localField: '_id',
+  foreignField: 'tags',
+});
 const Category = mongoose.model('category', categorySchema);
 
 module.exports = Category;
