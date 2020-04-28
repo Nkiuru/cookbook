@@ -143,6 +143,14 @@ const recipeSchema = new mongoose.Schema({
   },
 });
 
+recipeSchema.statics.findRecipes = function(query) {
+  return this.find(query, { isDeleted: false });
+};
+
+recipeSchema.statics.findDeletedRecipes = function(query) {
+  return this.find(query, { isDeleted: true });
+};
+
 const Recipe = mongoose.model('recipe', recipeSchema);
 
 module.exports = Recipe;

@@ -9,8 +9,9 @@ const getRecipe = async (_, args) => {
 };
 
 const getRecipes = async (_, args) => {
-  const query = {};
-  return populateRecipe(Recipe.find(query));
+  const params = {};
+  const query = args.showDeleted ? Recipe.find(params) : Recipe.findRecipes(params);
+  return populateRecipe(await query.exec());
 };
 
 module.exports = {

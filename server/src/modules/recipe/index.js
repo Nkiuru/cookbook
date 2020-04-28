@@ -16,6 +16,7 @@ const typeDefs = gql`
       portions: Int
       startPoint: Int
       endPoint: Int
+      showDeleted: Boolean
     ): [Recipe]
   }
 
