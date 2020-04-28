@@ -6,10 +6,12 @@ const recipeSchema = new mongoose.Schema({
     type: String,
     required: true,
     max: 120,
+    text: true,
   },
   description: {
     type: String,
     required: true,
+    text: true,
   },
   equipment: [
     {
@@ -33,6 +35,7 @@ const recipeSchema = new mongoose.Schema({
       ingredient: {
         type: String,
         required: true,
+        text: true,
       },
     },
   ],
@@ -46,6 +49,7 @@ const recipeSchema = new mongoose.Schema({
       text: {
         type: String,
         required: true,
+        text: true,
       },
       image: {
         type: mongoose.Types.ObjectId,
@@ -142,6 +146,11 @@ const recipeSchema = new mongoose.Schema({
     default: false,
   },
 });
+
+recipeSchema.index(
+  { 'title': 'text', 'description': 'text', 'ingredients.ingredient': 'text', 'instructions.text': 'text' },
+  { weights: { 'title': 5, 'description': 2, 'ingredients.ingredient': 2, 'instructions.text': 1 } },
+);
 
 recipeSchema.statics.findRecipes = function(query) {
   return this.find(query, { isDeleted: false });
