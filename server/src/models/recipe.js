@@ -137,6 +137,10 @@ const recipeSchema = new mongoose.Schema({
   notes: {
     type: String,
   },
+  isDeleted: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const Recipe = mongoose.model('recipe', recipeSchema);

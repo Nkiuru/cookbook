@@ -41,6 +41,9 @@ const createRecipe = async (_, args, { user }) => {
 const modifyRecipe = async (_, args, { user }) => {
   args = args.recipe;
   let recipe = await Recipe.findById(args.id);
+  if (!recipe) {
+    throw new ApolloError('Recipe does not exist');
+  }
   if (recipe.author.toString() !== user._id.toString()) {
     throw new ApolloError('Unauthorized');
   }
@@ -55,7 +58,16 @@ const modifyRecipe = async (_, args, { user }) => {
   return await populateRecipe(recipe);
 };
 
-const deleteRecipe = async (_, args) => {};
+const deleteRecipe = async (_, args) => {
+  let recipe = await Recipe.findById(args.id);
+  if (!recipe) {
+    throw new ApolloError('Recipe does not exist');
+  }
+  recipe.isDeleted = true;
+  await recipe.save();
+  return 'Recipe deleted';
+};
+
 const cloneRecipe = async (_, { id }, { user }) => {
   const recipe = await Recipe.findById(id);
   if (!recipe) {
