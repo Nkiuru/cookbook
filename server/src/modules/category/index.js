@@ -13,7 +13,7 @@ const typeDefs = gql`
   }
 
   type Category {
-    id: ID!
+    _id: ID!
     name: String!
     recipes: [Recipe]
   }

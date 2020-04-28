@@ -105,7 +105,7 @@ const typeDefs = gql`
     difficulty: Difficulty
     portions: Int
     notes: String
-    tags: [TagInput!]
+    tags: [ID!]
     categories: [CategoryInput!]
   }
 
@@ -132,19 +132,20 @@ const typeDefs = gql`
   }
 
   input RecipeInputModify {
-    title: String!
-    description: String!
-    equipment: [EquipmentInput]!
-    ingredients: [IngredientInput]!
-    instructions: [InstructionInput]!
-    images: [ImageInput]!
+    id: ID!
+    title: String
+    description: String
+    equipment: [EquipmentInput]
+    ingredients: [IngredientInput]
+    instructions: [InstructionInput]
+    images: [ImageInput]
     calories: Int
     cookingTime: String
     difficulty: Difficulty
     portions: Int
     notes: String
-    tags: [TagInput]
-    categories: [CategoryInput]
+    tags: [ID!]
+    categories: [ID!]
   }
 `;
 

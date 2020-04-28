@@ -1,14 +1,12 @@
 const Recipe = require('../../../models/recipe');
 const File = require('../../../models/file');
-const Tag = require('../../../models/tag');
-const Category = require('../../../models/category');
 const { processUpload } = require('../../../utils/upload');
 const mongoose = require('mongoose');
-const { merge } = require('lodash-es');
+const { ApolloError } = require('apollo-server-express');
 
 const populateRecipe = async recipe => {
   return recipe
-    .populate('rating originalAuthor author reviews categories lists images.file instructions.image')
+    .populate('rating originalAuthor author reviews categories lists images.file instructions.image tags')
     .execPopulate();
 };
 
@@ -32,46 +30,28 @@ const createFiles = async recipe => {
   return recipe;
 };
 
-const addRecipeToTags = async recipe => {
-  return Tag.update({ _id: { $in: recipe.tags } }, { $addToSet: { recipes: recipe.id } });
-};
-
-const addRecipeToCategories = async recipe => {
-  return Category.update({ _id: { $in: recipe.categories } }, { $addToSet: { recipes: recipe.id } });
-};
-
-const removeRecipeFromCategories = async (recipe, categories) => {
-  return Category.update({ _id: { $in: categories } }, { $pull: { recipes: recipe.id } });
-};
-const removeRecipeFromTags = async (recipe, tags) => {
-  return Tag.update({ _id: { $in: tags } }, { $pull: { recipes: recipe.id } });
-};
-
 const createRecipe = async (_, args, { user }) => {
   args = args.recipe;
   args.author = user.id;
   args.originalAuthor = user.id;
   args = await createFiles(args);
-  if (args.tags && args.tags.length > 0) {
-    args = await addRecipeToTags(args);
-  }
-  if (args.categories && args.categories.length > 0) {
-    args = await addRecipeToCategories(args);
-  }
   return await populateRecipe(await Recipe.create(args));
 };
 
 const modifyRecipe = async (_, args, { user }) => {
+  args = args.recipe;
   let recipe = await Recipe.findById(args.id);
-  if (recipe.owner !== user.id) {
-    throw 'Unauthorized';
+  if (recipe.author.toString() !== user._id.toString()) {
+    throw new ApolloError('Unauthorized');
   }
   let newRecipe = args;
+  console.log(newRecipe);
   if ((args.images && args.images.length > 0) || (args.instructions && args.instructions.length > 0)) {
     newRecipe = await createFiles(args);
   }
-  recipe = merge(newRecipe, recipe);
+  recipe = Object.assign(recipe, newRecipe);
   await recipe.save();
+  console.log(recipe);
   return await populateRecipe(recipe);
 };
 
@@ -79,7 +59,7 @@ const deleteRecipe = async (_, args) => {};
 const cloneRecipe = async (_, { id }, { user }) => {
   const recipe = await Recipe.findById(id);
   if (!recipe) {
-    throw 'Recipe does not exist';
+    throw new ApolloError('Unauthorized');
   }
   recipe._doc._id = mongoose.Types.ObjectId();
   recipe.author = user.id;

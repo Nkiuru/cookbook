@@ -1,7 +1,7 @@
 const Recipe = require('../../../models/recipe');
 
 const populateRecipe = async recipe => {
-  return recipe.populate('rating originalAuthor author reviews categories lists images.file instructions.image');
+  return recipe.populate('rating originalAuthor author reviews categories tags lists images.file instructions.image');
 };
 
 const getRecipe = async (_, args) => {

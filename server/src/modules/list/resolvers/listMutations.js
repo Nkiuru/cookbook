@@ -2,6 +2,7 @@ const List = require('../../../models/list');
 const Recipe = require('../../../models/recipe');
 const Tag = require('../../../models/tag');
 const Category = require('../../../models/category');
+const { ApolloError } = require('apollo-server-express');
 
 const createList = async (_, args, { user }) => {
   args.owner = user.id;
@@ -29,7 +30,7 @@ const addRecipeToList = async (_, { id, recipe }) => {
     await r.save();
     return await list.populate('owner tags categories recipes followers').execPopulate();
   } else {
-    throw 'Recipe does not exist';
+    throw new ApolloError('Recipe does not exist');
   }
 };
 
@@ -39,7 +40,7 @@ const addTagToList = async (_, { id, tag }) => {
     const list = await List.findByIdAndUpdate(id, { $push: { tags: tag } });
     return await list.populate('owner tags categories recipes followers').execPopulate();
   } else {
-    throw 'Tag does not exist';
+    throw new ApolloError('Tag does not exist');
   }
 };
 
@@ -49,7 +50,7 @@ const addCategoryToList = async (_, { id, category }) => {
     const list = await List.findByIdAndUpdate(id, { $push: { categories: category } });
     return await list.populate('owner tags categories recipes followers').execPopulate();
   } else {
-    throw 'Category does not exist';
+    throw new ApolloError('Category does not exist');
   }
 };
 

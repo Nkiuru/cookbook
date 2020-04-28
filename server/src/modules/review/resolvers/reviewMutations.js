@@ -1,5 +1,6 @@
 const Review = require('../../../models/review');
 const Recipe = require('../../../models/recipe');
+const { ApolloError } = require('apollo-server-express');
 
 const createReview = async (_, args, { user }) => {
   args.user = user.id;
@@ -7,13 +8,13 @@ const createReview = async (_, args, { user }) => {
     const review = await Review.create(args);
     return await review.populate('user recipe').execPopulate();
   } else {
-    throw 'Recipe does not exist';
+    throw new ApolloError('Recipe does not exist');
   }
 };
 
 const modifyReview = async (_, args) => {
   if (args.recipe && !(await Recipe.findOne(args.recipe))) {
-    throw 'Recipe does not exist';
+    throw new ApolloError('Recipe does not exist');
   }
   args.updatedAt = Date.now();
   const review = await Review.findByIdAndUpdate(args.id, args, { new: true });

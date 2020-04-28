@@ -14,7 +14,7 @@ const typeDefs = gql`
   }
 
   type Tag {
-    id: ID!
+    _id: ID!
     name: String!
     recipes: [Recipe]
   }
