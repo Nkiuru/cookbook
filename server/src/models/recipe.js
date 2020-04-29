@@ -83,10 +83,19 @@ const recipeSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  rating: [
+  ratings: [
     {
-      type: mongoose.Types.ObjectId,
-      ref: 'rating',
+      user: {
+        type: mongoose.Types.ObjectId,
+        ref: 'user',
+        required: true,
+      },
+      score: {
+        type: Number,
+        min: 1,
+        max: 5,
+        required: true,
+      },
     },
   ],
   difficulty: {

@@ -3,10 +3,11 @@ const File = require('../../../models/file');
 const { processUpload } = require('../../../utils/upload');
 const mongoose = require('mongoose');
 const { ApolloError } = require('apollo-server-express');
+const lodash = require('lodash');
 
 const populateRecipe = async recipe => {
   return recipe
-    .populate('rating originalAuthor author reviews categories lists images.file instructions.image tags')
+    .populate('rating originalAuthor author reviews categories lists images.file instructions.image tags ratings.user')
     .execPopulate();
 };
 
@@ -81,9 +82,28 @@ const cloneRecipe = async (_, { id }, { user }) => {
   return populateRecipe(recipe);
 };
 
+const rateRecipe = async (_, { recipe: { id, score } }, { user }) => {
+  let recipe = await Recipe.findById(id);
+  if (!recipe) throw new ApolloError('Recipe not found');
+  if (score < 1 && score > 5) {
+    throw new ApolloError('Rating has to be in range 1-5');
+  }
+  await Recipe.findByIdAndUpdate(id, { $pull: { ratings: { user: user._id.toString() } } });
+  return populateRecipe(
+    await Recipe.findByIdAndUpdate(
+      id,
+      {
+        $addToSet: { ratings: { user: user._id, score: score } },
+      },
+      { new: true },
+    ),
+  );
+};
+
 module.exports = {
   createRecipe,
   modifyRecipe,
   deleteRecipe,
   cloneRecipe,
+  rateRecipe,
 };

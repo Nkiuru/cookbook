@@ -24,6 +24,7 @@ const typeDefs = gql`
     modifyRecipe(recipe: RecipeInputModify!): Recipe @isAuthenticated
     deleteRecipe(id: ID!): String @isAuthenticated
     cloneRecipe(id: ID!): Recipe @isAuthenticated
+    rateRecipe(recipe: RecipeRatingInput!): Recipe @isAuthenticated
   }
 
   type Recipe {
@@ -36,7 +37,7 @@ const typeDefs = gql`
     images: [Image]!
     calories: Int!
     cookingTime: String
-    rating: [Rating]
+    ratings: [Rating]
     difficulty: Difficulty
     portions: Int
     created: DateTime
@@ -81,7 +82,6 @@ const typeDefs = gql`
 
   type Rating {
     user: User!
-    recipe: Recipe!
     score: Int!
   }
 
@@ -146,6 +146,11 @@ const typeDefs = gql`
     notes: String
     tags: [ID!]
     categories: [ID!]
+  }
+
+  input RecipeRatingInput {
+    id: ID!
+    score: Int!
   }
 `;
 
