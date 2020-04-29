@@ -10,13 +10,26 @@ const createList = async (_, args, { user }) => {
   return await list.populate('owner tags categories recipes followers').execPopulate();
 };
 
-const modifyList = async (_, args) => {
-  console.log(args);
+const modifyList = async (_, args, { user }) => {
+  let l = await List.findById(args.id);
+  if (!l) {
+    throw new ApolloError('List does not exist');
+  }
+  if (l.owner.toString() !== user._id.toString()) {
+    throw new ApolloError('Unauthorized');
+  }
   const list = await List.findByIdAndUpdate(args.id, args, { new: true });
   return await list.populate('owner tags categories recipes followers').execPopulate();
 };
 
-const deleteList = async (_, args) => {
+const deleteList = async (_, args, { user }) => {
+  let l = await List.findById(args.id);
+  if (!l) {
+    throw new ApolloError('List does not exist');
+  }
+  if (l.owner.toString() !== user._id.toString()) {
+    throw new ApolloError('Unauthorized');
+  }
   const list = await List.findByIdAndDelete(args.id);
   //TODO: Delete list refs from recipe & user
   return `${list.name} deleted`;
