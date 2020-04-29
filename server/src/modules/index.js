@@ -8,7 +8,8 @@ const list = require('./list');
 const review = require('./review');
 const tag = require('./tag');
 //const tool = require('./tool');
+const user = require('./user');
 
 module.exports = makeExecutableSchemaFromModules({
-  modules: [auth, list, review, tag, recipe, category],
+  modules: [auth, list, review, tag, recipe, category, user],
 });

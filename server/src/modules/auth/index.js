@@ -28,6 +28,8 @@ const typeDefs = gql`
     changed: DateTime!
     lists: [List]
     followedLists: [List]
+    isAdmin: Boolean
+    isDeleted: Boolean
   }
 `;
 

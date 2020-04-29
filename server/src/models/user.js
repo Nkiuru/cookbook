@@ -4,10 +4,12 @@ const userSchema = new mongoose.Schema({
   firstName: {
     type: String,
     required: true,
+    text: true,
   },
   lastName: {
     type: String,
     required: true,
+    text: true,
   },
   email: {
     type: String,
@@ -41,8 +43,17 @@ const userSchema = new mongoose.Schema({
       ref: 'list',
     },
   ],
+  isAdmin: {
+    type: Boolean,
+    default: false,
+  },
+  isDeleted: {
+    type: Boolean,
+    default: false,
+  },
 });
 
+userSchema.index({ firstName: 'text', lastName: 'text' });
 userSchema.virtual('fullName').get(function() {
   return `${this.firstName} ${this.lastName}`;
 });

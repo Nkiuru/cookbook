@@ -17,7 +17,7 @@ const login = async (_, { email, password }) => {
     throw new AuthenticationError('Incorrect email / password');
   }
   const token = tokenUtil.create(user.id);
-  user.update({ lastActive: Date.now() });
+  user.lastActive = Date.now();
   await user.save();
   return {
     user: {
