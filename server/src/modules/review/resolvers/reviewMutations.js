@@ -3,8 +3,9 @@ const Recipe = require('../../../models/recipe');
 const { ApolloError } = require('apollo-server-express');
 
 const createReview = async (_, args, { user }) => {
+  console.log(args);
   args.user = user.id;
-  if (await Recipe.findOne(args.recipe)) {
+  if (await Recipe.findById(args.recipe)) {
     const review = await Review.create(args);
     return await review.populate('user recipe').execPopulate();
   } else {
@@ -12,13 +13,17 @@ const createReview = async (_, args, { user }) => {
   }
 };
 
-const modifyReview = async (_, args) => {
-  if (args.recipe && !(await Recipe.findOne(args.recipe))) {
+const modifyReview = async (_, args, { user }) => {
+  let review = await Review.findById(args.id);
+  if (args.recipe && !(await Recipe.findById(args.recipe))) {
     throw new ApolloError('Recipe does not exist');
   }
-  args.updatedAt = Date.now();
-  const review = await Review.findByIdAndUpdate(args.id, args, { new: true });
-  return await review.populate('user recipe').execPopulate();
+  if (!review || review.user.toString() !== user.id.toString()) {
+    throw new ApolloError('Unauthorized');
+  }
+  review.updatedAt = Date.now();
+  review.content = args.content;
+  return (await review.save()).populate('user recipe').execPopulate();
 };
 
 const deleteReview = async (_, args) => {

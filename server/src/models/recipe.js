@@ -148,8 +148,8 @@ const recipeSchema = new mongoose.Schema({
 });
 
 recipeSchema.index(
-  { 'title': 'text', 'description': 'text', 'ingredients.ingredient': 'text', 'instructions.text': 'text' },
-  { weights: { 'title': 5, 'description': 2, 'ingredients.ingredient': 2, 'instructions.text': 1 } },
+  { title: 'text', description: 'text', 'ingredients.ingredient': 'text', 'instructions.text': 'text' },
+  { weights: { title: 5, description: 2, 'ingredients.ingredient': 2, 'instructions.text': 1 } },
 );
 
 recipeSchema.statics.findRecipes = function(query) {

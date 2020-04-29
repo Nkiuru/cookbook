@@ -71,7 +71,7 @@ const deleteRecipe = async (_, args) => {
 const cloneRecipe = async (_, { id }, { user }) => {
   const recipe = await Recipe.findById(id);
   if (!recipe) {
-    throw new ApolloError('Unauthorized');
+    throw new ApolloError('Recipe does not exist');
   }
   recipe._doc._id = mongoose.Types.ObjectId();
   recipe.author = user.id;

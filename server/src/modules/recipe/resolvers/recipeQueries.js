@@ -1,7 +1,10 @@
 const Recipe = require('../../../models/recipe');
 
-const populateRecipe = async recipe => {
-  return recipe.populate('rating originalAuthor author reviews categories tags lists images.file instructions.image');
+const populateRecipe = async (recipe, skip, limit) => {
+  return recipe
+    .populate('rating originalAuthor author reviews categories tags lists images.file instructions.image')
+    .skip(skip)
+    .limit(limit);
 };
 
 const getRecipe = async (_, args) => {
@@ -35,13 +38,9 @@ const getRecipes = async (_, args) => {
     };
   }
   if (args.showDeleted) {
-    return populateRecipe(
-      await Recipe.find(params)
-        .skip(skip)
-        .limit(limit),
-    );
+    return populateRecipe(Recipe.find(params), skip, limit);
   } else {
-    return populateRecipe(Recipe.find(params));
+    return populateRecipe(Recipe.findRecipes(params), skip, limit);
   }
 };
 

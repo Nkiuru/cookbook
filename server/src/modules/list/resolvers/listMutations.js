@@ -22,35 +22,35 @@ const deleteList = async (_, args) => {
   return `${list.name} deleted`;
 };
 
-const addRecipeToList = async (_, { id, recipe }) => {
+const addRecipeToList = async (_, { id, recipe }, { user }) => {
   const r = Recipe.findOne(recipe);
-  if (r) {
+  if (r && r.owner.toString() === user.id.toString()) {
     const list = await List.findByIdAndUpdate(id, { $push: { recipes: recipe } });
     r.lists.push(list.id);
     await r.save();
     return await list.populate('owner tags categories recipes followers').execPopulate();
   } else {
-    throw new ApolloError('Recipe does not exist');
+    throw new ApolloError('Recipe does not exist / Unauthorized');
   }
 };
 
-const addTagToList = async (_, { id, tag }) => {
+const addTagToList = async (_, { id, tag }, { user }) => {
   const t = Tag.findOne(tag);
-  if (t) {
+  if (t && t.owner.toString() === user.id.toString()) {
     const list = await List.findByIdAndUpdate(id, { $push: { tags: tag } });
     return await list.populate('owner tags categories recipes followers').execPopulate();
   } else {
-    throw new ApolloError('Tag does not exist');
+    throw new ApolloError('Tag does not exist / Unauthorized');
   }
 };
 
-const addCategoryToList = async (_, { id, category }) => {
+const addCategoryToList = async (_, { id, category }, { user }) => {
   const c = Category.findOne(category);
-  if (c) {
+  if (c && c.owner.toString() === user.id.toString()) {
     const list = await List.findByIdAndUpdate(id, { $push: { categories: category } });
     return await list.populate('owner tags categories recipes followers').execPopulate();
   } else {
-    throw new ApolloError('Category does not exist');
+    throw new ApolloError('Category does not exist / Unauthorized');
   }
 };
 
