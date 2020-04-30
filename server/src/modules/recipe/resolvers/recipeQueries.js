@@ -37,6 +37,13 @@ const getRecipes = async (_, args) => {
       $search: args.searchTerm,
     };
   }
+  if (args.difficulty) params.difficulty = args.difficulty;
+  if (args.author) params.author = args.author;
+  if (args.ingredients) {
+    params.ingredients = {
+      $elemMatch: { $in: args.ingredients },
+    };
+  }
   if (args.showDeleted) {
     return populateRecipe(Recipe.find(params), skip, limit);
   } else {

@@ -6,14 +6,13 @@ const typeDefs = gql`
     getRecipe(id: ID!): Recipe
     getRecipes(
       searchTerm: String
-      ingredients: String
+      ingredients: [ID]
       categories: [ID!]
       tags: [ID!]
       list: ID
       difficulty: Difficulty
       author: ID
       rating: Int
-      portions: Int
       startPoint: Int
       showDeleted: Boolean
     ): [Recipe]
