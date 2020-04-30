@@ -11,7 +11,7 @@ const categorySchema = new mongoose.Schema({
 categorySchema.virtual('recipes', {
   ref: 'recipe',
   localField: '_id',
-  foreignField: 'tags',
+  foreignField: 'categories',
 });
 const Category = mongoose.model('category', categorySchema);
 

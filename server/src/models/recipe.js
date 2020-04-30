@@ -88,13 +88,11 @@ const recipeSchema = new mongoose.Schema({
       user: {
         type: mongoose.Types.ObjectId,
         ref: 'user',
-        required: true,
       },
       score: {
         type: Number,
         min: 1,
         max: 5,
-        required: true,
       },
     },
   ],
@@ -168,6 +166,14 @@ recipeSchema.statics.findRecipes = function(query) {
 recipeSchema.statics.findDeletedRecipes = function(query) {
   return this.find(query, { isDeleted: true });
 };
+
+recipeSchema.statics.populateRecipe = function(recipe) {
+  return recipe.populate('originalAuthor author reviews categories tags lists images.file instructions.image');
+};
+
+recipeSchema.virtual('rating').get(function() {
+  return Recipe.aggregate([{ $group: { _id: null, averageRating: { $avg: '$ratings.score' } } }]);
+});
 
 const Recipe = mongoose.model('recipe', recipeSchema);
 

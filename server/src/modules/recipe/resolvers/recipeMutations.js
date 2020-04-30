@@ -6,9 +6,7 @@ const { ApolloError } = require('apollo-server-express');
 const lodash = require('lodash');
 
 const populateRecipe = async recipe => {
-  return recipe
-    .populate('rating originalAuthor author reviews categories lists images.file instructions.image tags ratings.user')
-    .execPopulate();
+  return Recipe.populateRecipe(recipe).execPopulate();
 };
 
 const createFiles = async recipe => {

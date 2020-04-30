@@ -1,8 +1,7 @@
 const Recipe = require('../../../models/recipe');
 
 const populateRecipe = async (recipe, skip, limit) => {
-  return recipe
-    .populate('rating originalAuthor author reviews categories tags lists images.file instructions.image')
+  return Recipe.populateRecipe(recipe)
     .skip(skip)
     .limit(limit);
 };
@@ -16,7 +15,6 @@ const getRecipes = async (_, args) => {
   const skip = args.startPoint || 0;
   const limit = skip + 50;
 
-  console.log(await Recipe.listIndexes());
   if (args.tags && args.tags.length > 0) {
     params.tags = {
       $elemMatch: { $in: args.tags },
@@ -29,7 +27,7 @@ const getRecipes = async (_, args) => {
   }
   if (args.list) {
     params.lists = {
-      $elemMatch: args.list,
+      $in: args.list,
     };
   }
   if (args.searchTerm) {
@@ -41,9 +39,13 @@ const getRecipes = async (_, args) => {
   if (args.author) params.author = args.author;
   if (args.ingredients) {
     params.ingredients = {
-      $elemMatch: { $in: args.ingredients },
+      $elemMatch: { _id: { $in: args.ingredients } },
     };
   }
+  if (args.rating) {
+    params.$expr = { $gte: [{ $avg: '$ratings.score' }, args.rating] };
+  }
+  console.log(params);
   if (args.showDeleted) {
     return populateRecipe(Recipe.find(params), skip, limit);
   } else {

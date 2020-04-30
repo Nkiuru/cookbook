@@ -36,9 +36,10 @@ const deleteList = async (_, args, { user }) => {
 };
 
 const addRecipeToList = async (_, { id, recipe }, { user }) => {
-  const r = Recipe.findOne(recipe);
-  if (r && r.owner.toString() === user.id.toString()) {
-    const list = await List.findByIdAndUpdate(id, { $push: { recipes: recipe } });
+  const r = await Recipe.findById(recipe);
+  let list = await List.findById(id);
+  if (r && list.owner.toString() === user.id.toString()) {
+    list = await List.findByIdAndUpdate(id, { $push: { recipes: recipe } });
     r.lists.push(list.id);
     await r.save();
     return await list.populate('owner tags categories recipes followers').execPopulate();
@@ -48,9 +49,10 @@ const addRecipeToList = async (_, { id, recipe }, { user }) => {
 };
 
 const addTagToList = async (_, { id, tag }, { user }) => {
-  const t = Tag.findOne(tag);
-  if (t && t.owner.toString() === user.id.toString()) {
-    const list = await List.findByIdAndUpdate(id, { $push: { tags: tag } });
+  const t = await Tag.findById(tag);
+  let list = await List.findById(id);
+  if (t && list.owner.toString() === user.id.toString()) {
+    list = await List.findByIdAndUpdate(id, { $push: { tags: tag } });
     return await list.populate('owner tags categories recipes followers').execPopulate();
   } else {
     throw new ApolloError('Tag does not exist / Unauthorized');
@@ -59,8 +61,9 @@ const addTagToList = async (_, { id, tag }, { user }) => {
 
 const addCategoryToList = async (_, { id, category }, { user }) => {
   const c = Category.findOne(category);
-  if (c && c.owner.toString() === user.id.toString()) {
-    const list = await List.findByIdAndUpdate(id, { $push: { categories: category } });
+  let list = await List.findById(id);
+  if (c && list.owner.toString() === user.id.toString()) {
+    list = await List.findByIdAndUpdate(id, { $push: { categories: category } });
     return await list.populate('owner tags categories recipes followers').execPopulate();
   } else {
     throw new ApolloError('Category does not exist / Unauthorized');

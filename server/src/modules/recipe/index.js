@@ -70,6 +70,7 @@ const typeDefs = gql`
   }
 
   type Ingredient {
+    _id: ID!
     amount: String!
     ingredient: String!
   }
