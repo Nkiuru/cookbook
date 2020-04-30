@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const { ApolloServer } = require('apollo-server-express');
+const cors = require('cors');
 
 const context = require('./utils/context');
 const schema = require('./modules');
@@ -14,6 +15,7 @@ const server = new ApolloServer({
 });
 
 const app = express();
+app.use(cors());
 
 server.applyMiddleware({
   path: '/graphql',
