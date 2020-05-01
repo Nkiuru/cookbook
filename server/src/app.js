@@ -15,7 +15,11 @@ const server = new ApolloServer({
 });
 
 const app = express();
-app.use(cors());
+const corsOptions = {
+  origin: 'http://localhost:3001',
+  credentials: true,
+};
+app.use(cors(corsOptions));
 
 server.applyMiddleware({
   path: '/graphql',

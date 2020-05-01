@@ -3,9 +3,18 @@ import './App.scss';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
 import HomePage from '../pages/HomePage';
+const API_URL = 'http://localhost:3000/graphql';
 
 const client = new ApolloClient({
-  uri: 'http://localhost:3000/graphql',
+  uri: API_URL,
+  request: operation => {
+    const token = localStorage.getItem('token');
+    operation.setContext({
+      headers: {
+        authorization: token ? `Bearer ${token}` : '',
+      },
+    });
+  },
 });
 
 function App() {

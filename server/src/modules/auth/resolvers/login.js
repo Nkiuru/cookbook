@@ -20,10 +20,7 @@ const login = async (_, { email, password }) => {
   user.lastActive = Date.now();
   await user.save();
   return {
-    user: {
-      ...user._doc,
-      id: user.id,
-    },
+    user: user,
     token,
     tokenExpiration: config.JWT_LIFE_TIME,
   };
