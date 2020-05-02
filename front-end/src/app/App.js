@@ -14,6 +14,7 @@ import AddEditRecipePage from '../pages/AddEditRecipePage';
 import ListPage from '../pages/ListPage';
 import ListSearchPage from '../pages/ListSearchPage';
 import AddEditListPage from '../pages/AddEditListPage';
+import UserPage from '../pages/UserPage';
 import { authenticated as auth } from '../utils/auth';
 
 const API_URL = 'http://localhost:3000/graphql';
@@ -49,10 +50,10 @@ function App() {
       <Switch location={location}>
         <Route path="/dashboard" render={dashboard} />
         <Route path="/profile" render={profile} />
-        <Route path="/recipes" render={recipes} />
-        <Route path="/recipe:id/edit" render={recipeEdit} />
-        <Route path="/recipe/:id" render={recipeDetail} />
         <Route path="/recipes/search" render={recipeSearch} />
+        <Route path="/recipes" render={recipes} />
+        <Route path="/recipe/:id/edit" render={recipeEdit} />
+        <Route path="/recipe/:id" render={recipeDetail} />
         <Route path="/lists/search" render={listSearch} />
         <Route path="/list/:id/edit" render={listEdit} />
         <Route path="/list/:id" render={list} />
