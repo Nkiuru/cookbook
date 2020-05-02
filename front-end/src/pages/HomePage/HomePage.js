@@ -5,6 +5,7 @@ import { GET_ME } from '../../utils/queries/users';
 import { LOGIN } from '../../utils/mutations/auth';
 import LoginModal from '../../components/LoginModal';
 import PageContainer from '../../containers/PageContainer';
+import Button from '../../components/Button';
 
 const HomePage = () => {
   let login = '';
@@ -34,6 +35,15 @@ const HomePage = () => {
           login({ variables: { email, password } }).then(func);
         }}
       />
+      <div style={{ flexDirection: 'row', display: 'flex', margin: '16px' }}>
+        <Button onClick={() => {}} primary label="Primary outline" />
+        <Button onClick={() => {}} primary filled label="Primary filled" />
+      </div>
+      <div style={{ flexDirection: 'row', display: 'flex', margin: '16px' }}>
+        <Button onClick={() => {}} secondary label="secondary outline" />
+        <Button onClick={() => {}} secondary filled label="secondary filled" />
+      </div>
+      <div></div>
     </PageContainer>
   );
 };

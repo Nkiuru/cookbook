@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styles from './LoginModal.module.scss';
 import PropTypes from 'prop-types';
+import Button from '../Button';
 
 const LoginModal = ({ onLogin, onSignup }) => {
   const [email, setEmail] = useState('');
@@ -23,17 +24,14 @@ const LoginModal = ({ onLogin, onSignup }) => {
           onChange={e => setPassword(e.target.value)}
           required={true}
         />
-        <button
-          type="submit"
+        <Button
           onClick={e => {
             e.preventDefault();
-            console.log(email);
-            console.log(password);
             onLogin(email, password);
           }}
-        >
-          Login
-        </button>
+          secondary
+          label="Login"
+        />
       </form>
     </div>
   );
