@@ -7,7 +7,6 @@
   text-align: center;
   text-transform: uppercase;
   display: flex;
-  align-self: stretch;
   justify-content: center;
   border-radius: 10px;
   border: 1px solid $text-dark;
@@ -39,6 +38,7 @@
   &.secondary {
     color: $text-dark;
     font-weight: $semi-bold;
+
     &.filled {
       color: $white;
       border-color: $white;
