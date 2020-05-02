@@ -31,7 +31,7 @@ Button.propTypes = {
   onClick: PropTypes.func,
   disabled: PropTypes.bool,
   type: PropTypes.oneOf(['button', 'submit']),
-  filled: PropTypes.bool
+  filled: PropTypes.bool,
 };
 
 Button.defaultProps = {

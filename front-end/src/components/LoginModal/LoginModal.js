@@ -2,37 +2,36 @@ import React, { useState } from 'react';
 import styles from './LoginModal.module.scss';
 import PropTypes from 'prop-types';
 import Button from '../Button';
+import * as Yup from 'yup';
+import { Formik, Form } from 'formik';
+import TextInput from '../TextInput';
 
 const LoginModal = ({ onLogin, onSignup }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
+  const initialValues = {
+    email: '',
+    password: '',
+  };
+  const validationSchema = Yup.object({
+    email: Yup.string().required('Required field'),
+    password: Yup.string().required('Required field'),
+  });
   return (
     <div>
-      <form>
-        <input
-          name="email"
-          placeholder="email"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          required={true}
-        />
-        <input
-          name="password"
-          placeholder="password"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-          required={true}
-        />
-        <Button
-          onClick={e => {
-            e.preventDefault();
-            onLogin(email, password);
-          }}
-          secondary
-          label="Login"
-        />
-      </form>
+      <Formik onSubmit={onLogin} initialValues={initialValues} validationSchema={validationSchema}>
+        {({ isSubmitting }) => (
+          <Form className={styles.login}>
+            <TextInput name="email" type="email" label="Email" placeholder="jane.doe@email.fi" />
+            <TextInput
+              name="password"
+              type="password"
+              label="Password"
+              placeholder="••••••••"
+              style={{ marginTop: '16px' }}
+            />
+            {isSubmitting ? <p>Sending</p> : <Button type="submit" label="Login" style={{ marginTop: '16px' }} />}
+          </Form>
+        )}
+      </Formik>
     </div>
   );
 };

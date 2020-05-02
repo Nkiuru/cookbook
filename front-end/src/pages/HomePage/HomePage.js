@@ -29,7 +29,7 @@ const HomePage = () => {
         {error && <p>{error.message}</p>}
       </div>
       <LoginModal
-        onLogin={(email, password) => {
+        onLogin={({ email, password }) => {
           console.log(email);
           console.log(password);
           login({ variables: { email, password } }).then(func);
@@ -43,7 +43,6 @@ const HomePage = () => {
         <Button onClick={() => {}} secondary label="secondary outline" />
         <Button onClick={() => {}} secondary filled label="secondary filled" />
       </div>
-      <div></div>
     </PageContainer>
   );
 };
