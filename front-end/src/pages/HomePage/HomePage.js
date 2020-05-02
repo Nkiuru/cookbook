@@ -4,6 +4,7 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import { GET_ME } from '../../utils/queries/users';
 import { LOGIN } from '../../utils/mutations/auth';
 import LoginModal from '../../components/LoginModal';
+import PageContainer from '../../containers/PageContainer';
 
 const HomePage = () => {
   let login = '';
@@ -15,7 +16,7 @@ const HomePage = () => {
     localStorage.setItem('user', JSON.stringify(data.login.user));
   };
   return (
-    <div>
+    <PageContainer>
       <div>
         {data && (
           <div key={data.me.id}>
@@ -33,7 +34,7 @@ const HomePage = () => {
           login({ variables: { email, password } }).then(func);
         }}
       />
-    </div>
+    </PageContainer>
   );
 };
 

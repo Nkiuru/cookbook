@@ -1,11 +1,14 @@
 import React from 'react';
 import styles from './UserPage.module.scss';
+import PageContainer from '../../containers/PageContainer';
+import Toolbar from '../../components/Toolbar';
 
 const UserPage = () => {
   return (
-    <div>
+    <PageContainer>
+      <Toolbar />
       <h1 style={{ marginTop: '16px', textAlign: 'center' }}>User page</h1>
-    </div>
+    </PageContainer>
   );
 };
 
