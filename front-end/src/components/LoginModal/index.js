@@ -1,2 +1,2 @@
-import LoginModal from './LoginModal';
-export default LoginModal;
+import LoginSignupDialog from './LoginModal';
+export default LoginSignupDialog;

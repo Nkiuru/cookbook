@@ -1,0 +1,9 @@
+@import '../../vars';
+
+.container {
+
+}
+.blurred {
+  filter: blur(4px) grayscale(40%);
+  -webkit-filter: blur(4px) grayscale(40%);
+}
