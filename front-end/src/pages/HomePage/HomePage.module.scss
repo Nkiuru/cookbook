@@ -1,9 +1,45 @@
 @import '../../vars';
 
 .container {
+  font-family: $font;
+  color: $text-dark;
+  margin: 96px 48px;
+  width: 50%;
+  .title {
+    font-size: $font-large;
+    font-weight: $font-medium;
+  }
 
+  .actions {
+    margin-top: 96px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    .sep {
+      margin: 0 8px;
+      font-size: $body-text-size;
+      font-family: $font;
+    }
+  }
 }
 .blurred {
   filter: blur(4px) grayscale(40%);
   -webkit-filter: blur(4px) grayscale(40%);
+}
+
+.page {
+  display: flex;
+  flex-direction: row;
+}
+
+.images {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: 100vh;
+  img {
+    object-fit: cover;
+    height: 50%;
+  }
 }

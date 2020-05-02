@@ -3,10 +3,11 @@ import styles from './HomePage.module.scss';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { GET_ME } from '../../utils/queries/users';
 import { LOGIN, SIGNGUP } from '../../utils/mutations/auth';
-import LoginModal from '../../components/LoginModal';
 import PageContainer from '../../containers/PageContainer';
 import Button from '../../components/Button';
 import LoginSignupDialog from '../../components/LoginModal';
+import pizza from '../../assets/pizza.jpg';
+import salmon from '../../assets/salmon.jpeg';
 
 const HomePage = () => {
   const [showLoginDialog, setShowLoginDialog] = useState(false);
@@ -14,6 +15,8 @@ const HomePage = () => {
   const { loading, error, data } = useQuery(GET_ME);
   const { login } = useMutation(LOGIN);
   const { signup } = useMutation(SIGNGUP);
+  const classes = [styles.page];
+  (showDialog || showLoginDialog) && classes.push(styles.blurred);
   const handleUserKeyPress = useCallback(event => {
     const { key, keyCode } = event;
 
@@ -33,6 +36,7 @@ const HomePage = () => {
   const saveCredentials = ({ data }) => {
     localStorage.setItem('token', data.login.token);
     localStorage.setItem('user', JSON.stringify(data.login.user));
+    setShowLoginDialog(false);
   };
   const loginHandler = ({ email, password }) => {
     login({ variables: { email, password } }).then(saveCredentials);
@@ -40,35 +44,28 @@ const HomePage = () => {
   const signupHandler = ({ email, firstName, lastName, password }) => {
     signup({ variables: { email, password, firstName, lastName } }).then(() => {
       window.alert('Account created');
+      setShowDialog(false);
     });
   };
   if (loading) return <p>Loading...</p>;
 
   return (
     <PageContainer>
-      <div className={(showDialog || showLoginDialog) && styles.blurred}>
-        <div>
-          {data && (
-            <div key={data.me.id}>
-              <p>
-                {data.me.fullName}: {data.me.email}
-              </p>
-            </div>
-          )}
-          {error && <p>{error.message}</p>}
+      <div className={classes.join(' ')}>
+        <div className={styles.container}>
+          <h2 className={styles.title}>Cookbook</h2>
+          <p style={{ width: '55%' }}>
+            Description of what cookbook does, its features, what it can do for users, what users can do etc.
+          </p>
+          <div className={styles.actions}>
+            <Button label="Login" secondary onClick={() => setShowLoginDialog(true)} />
+            <p className={styles.sep}>/</p>
+            <Button label="Sign up" primary onClick={() => setShowDialog(true)} />
+          </div>
         </div>
-        <div>
-          <Button label="Login" secondary onClick={() => setShowLoginDialog(true)} />
-          /
-          <Button label="Sign up" primary onClick={() => setShowDialog(true)} />
-        </div>
-        <div style={{ flexDirection: 'row', display: 'flex', margin: '16px' }}>
-          <Button onClick={() => {}} primary label="Primary outline" />
-          <Button onClick={() => {}} primary filled label="Primary filled" />
-        </div>
-        <div style={{ flexDirection: 'row', display: 'flex', margin: '16px' }}>
-          <Button onClick={() => {}} secondary label="secondary outline" />
-          <Button onClick={() => {}} secondary filled label="secondary filled" />
+        <div className={styles.images}>
+          <img src={pizza} alt="pizza" />
+          <img src={salmon} alt="salmon" />
         </div>
       </div>
       {showLoginDialog && <LoginSignupDialog login={loginHandler} />}
