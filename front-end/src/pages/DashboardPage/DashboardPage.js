@@ -1,11 +1,13 @@
 import React from 'react';
 import styles from './DashboardPage.module.scss';
-
+import PageContainer from '../../containers/PageContainer';
+import Toolbar from '../../components/Toolbar';
 const DashboardPage = () => {
   return (
-    <div>
+    <PageContainer>
+      <Toolbar />
       <h1 style={{ marginTop: '16px', textAlign: 'center' }}>Dashboard page</h1>
-    </div>
+    </PageContainer>
   );
 };
 
