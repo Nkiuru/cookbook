@@ -54,8 +54,10 @@ const HomePage = () => {
       <div className={classes.join(' ')}>
         <div className={styles.container}>
           <h2 className={styles.title}>Cookbook</h2>
-          <p style={{ width: '55%' }}>
-            Description of what cookbook does, its features, what it can do for users, what users can do etc.
+          <p style={{ maxWidth: '60%' }}>
+            Cookbook is a recipe database that allows users to organize, plan their meals and share their recipes. The
+            application aims to help users to keep track of their recipes that they have in their head and to track
+            calories in meals to encourage users to eat healthier.
           </p>
           <div className={styles.actions}>
             <Button label="Login" secondary onClick={() => setShowLoginDialog(true)} />
