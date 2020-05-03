@@ -10,6 +10,10 @@ const listSchema = new mongoose.Schema({
     ref: 'user',
     required: true,
   },
+  description: {
+    type: String,
+    required: true,
+  },
   tags: [
     {
       type: mongoose.Types.ObjectId,

@@ -10,7 +10,25 @@ const getLists = async (_, { searchTerm }) => {
   return List.find(query).populate('owner tags categories recipes followers');
 };
 
+const getMyLists = async (_, args, { user }) => {
+  return List.find({ owner: user._id })
+    .populate({
+      path: 'owner tags categories recipes followers',
+      populate: [
+        {
+          path: 'images.file',
+          model: 'file',
+        },
+        {
+          path: 'author',
+        },
+      ],
+    })
+    .exec();
+};
+
 module.exports = {
   getList,
   getLists,
+  getMyLists,
 };

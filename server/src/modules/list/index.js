@@ -5,20 +5,23 @@ const typeDefs = gql`
   extend type Query {
     getLists(searchTerm: String): [List]
     getList(id: ID!): List
+    getMyLists: [List] @isAuthenticated
   }
 
   extend type Mutation {
-    createList(name: String!, tags: [ID], categories: [ID], recipes: [ID]): List
-    modifyList(id: ID!, name: String, tags: [ID], categories: [ID], recipes: [ID]): List
-    deleteList(id: ID!): String
-    addRecipeToList(id: ID!, recipe: ID!): List
-    addTagToList(id: ID!, tag: ID!): List
-    addCategoryToList(id: ID! category: ID!): List
+    createList(name: String!, description: String!, tags: [ID], categories: [ID], recipes: [ID]): List @isAuthenticated
+    modifyList(id: ID!, name: String, description: String, tags: [ID], categories: [ID], recipes: [ID]): List
+      @isAuthenticated
+    deleteList(id: ID!): String @isAuthenticated
+    addRecipeToList(id: ID!, recipe: ID!): List @isAuthenticated
+    addTagToList(id: ID!, tag: ID!): List @isAuthenticated
+    addCategoryToList(id: ID!, category: ID!): List @isAuthenticated
   }
 
   type List {
     id: ID!
     name: String!
+    description: String
     owner: User!
     tags: [Tag]
     categories: [Category]

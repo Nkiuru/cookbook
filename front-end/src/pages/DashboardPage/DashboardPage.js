@@ -10,6 +10,8 @@ import { GET_RECIPES } from '../../utils/queries/recipes';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import IconButton from '@material-ui/core/IconButton';
 import { useHistory } from 'react-router-dom';
+import { GET_MY_LISTS } from '../../utils/queries/lists';
+import RecipeListCard from '../../components/RecipeListCard';
 
 const DashboardPage = () => {
   const history = useHistory();
@@ -17,15 +19,14 @@ const DashboardPage = () => {
   const [listStart, setListStart] = useState(0);
   const user = localStorage.getItem('user');
   const { loading, error, data } = useQuery(GET_RECIPES, { variables: { author: user.id } });
-  const { loading: listLoading, error: listError, data: listData } = useQuery(GET_RECIPES, {
-    variables: { author: user.id },
-  });
+  const { loading: listLoading, error: listError, data: listData } = useQuery(GET_MY_LISTS);
   const openSearch = () => {
     history.push('/recipes/search');
   };
   const addRecipe = () => {
     history.push('/recipe/0/edit');
   };
+  console.log(listData);
   return (
     <PageContainer>
       <Toolbar />
@@ -62,9 +63,9 @@ const DashboardPage = () => {
         <div className={styles.recipes}>
           {!listLoading &&
             !listError &&
-            listData.getRecipes.slice(0, listStart + 4).map(recipe => (
-              <div key={recipe.id}>
-                <RecipeCard recipe={recipe} />
+            listData.getMyLists.slice(0, listStart + 4).map(list => (
+              <div key={list._id}>
+                <RecipeListCard list={list} />
               </div>
             ))}
         </div>

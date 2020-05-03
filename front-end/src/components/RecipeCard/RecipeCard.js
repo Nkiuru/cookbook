@@ -23,13 +23,6 @@ const RecipeCard = ({ recipe }) => {
     });
   };
 
-  const openTag = tag => {
-    history.push({
-      pathname: '/recipes/search',
-      state: { tags: [tag._id] },
-    });
-  };
-
   return (
     <div className={styles.card}>
       <div className={styles.content}>
