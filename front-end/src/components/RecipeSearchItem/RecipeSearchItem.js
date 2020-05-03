@@ -35,7 +35,9 @@ const RecipeSearchItem = ({ recipe }) => {
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           {recipe.tags.map(tag => (
             // eslint-disable-next-line react/jsx-key
-            <Tag tag={tag} />
+            <div key={tag._id}>
+              <Tag tag={tag} />
+            </div>
           ))}
         </div>
       </div>

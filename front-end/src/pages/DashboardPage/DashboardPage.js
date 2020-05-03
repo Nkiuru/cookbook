@@ -69,7 +69,7 @@ const DashboardPage = () => {
           {!listLoading &&
             !listError &&
             listData.getMyLists.slice(0, listStart + 4).map(list => (
-              <div key={list._id}>
+              <div key={list.id}>
                 <RecipeListCard list={list} />
               </div>
             ))}

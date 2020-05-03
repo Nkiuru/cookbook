@@ -1,0 +1,11 @@
+@import '../../vars.scss';
+.instructions {
+  margin: 16px;
+}
+
+.subtitle {
+  text-align: center;
+  font-size: $font-subheader;
+  font-family: $font;
+  font-weight: $medium;
+}
