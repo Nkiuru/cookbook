@@ -5,6 +5,7 @@ import Toolbar from '../../components/Toolbar';
 import { useLocation } from 'react-router';
 import { useQuery } from '@apollo/react-hooks';
 import { GET_RECIPES } from '../../utils/queries/recipes';
+import RecipeSearchItem from '../../components/RecipeSearchItem';
 
 const RecipeSearchPage = () => {
   const location = useLocation();
@@ -18,6 +19,13 @@ const RecipeSearchPage = () => {
     <PageContainer>
       <Toolbar />
       <h1 style={{ marginTop: '16px', textAlign: 'center' }}>Recipe search page</h1>
+      {!loading &&
+        !error &&
+        data.getRecipes.map(recipe => (
+          <div key={recipe.id}>
+            <RecipeSearchItem recipe={recipe} />
+          </div>
+        ))}
     </PageContainer>
   );
 };

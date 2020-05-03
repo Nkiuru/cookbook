@@ -5,6 +5,7 @@ import { AccountCircle } from '@material-ui/icons';
 import IconButton from '@material-ui/core/IconButton';
 import { useHistory } from 'react-router-dom';
 import Tooltip from '@material-ui/core/Tooltip';
+import Tag from '../Tag';
 
 const RecipeCard = ({ recipe }) => {
   const history = useHistory();
@@ -43,15 +44,8 @@ const RecipeCard = ({ recipe }) => {
         <div className={styles.description}>{recipe.description}</div>
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           {recipe.tags.map(tag => (
-            <div
-              key={tag._id}
-              className={styles.tag}
-              onClick={() => {
-                openTag(tag);
-              }}
-            >
-              {tag.name}
-            </div>
+            // eslint-disable-next-line react/jsx-key
+            <Tag tag={tag} />
           ))}
         </div>
         <figure className={styles.imgContainer}>
