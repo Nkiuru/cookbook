@@ -26,7 +26,9 @@ const DashboardPage = () => {
   const addRecipe = () => {
     history.push('/recipe/0/edit');
   };
-  console.log(listData);
+  const addList = () => {
+    history.push('/list/0/edit');
+  };
   return (
     <PageContainer>
       <Toolbar />
@@ -59,7 +61,10 @@ const DashboardPage = () => {
         <Divider />
       </div>
       <div style={{ marginTop: '16px' }}>
-        <div className={styles.subheader}>My Lists</div>
+        <div className={styles.subheader}>
+          My Lists
+          <Button label={'+ Add List'} onClick={addList} />
+        </div>
         <div className={styles.recipes}>
           {!listLoading &&
             !listError &&

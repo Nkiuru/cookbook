@@ -24,11 +24,17 @@
   font-size: $font-subheader;
   font-weight: $medium;
   margin-left: 16px;
+  margin-right: 16px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  button {
+    width: 128px;
+  }
 }
 .recipes {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   flex-wrap: wrap;
 }
 

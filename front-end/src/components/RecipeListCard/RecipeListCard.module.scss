@@ -10,7 +10,7 @@
   position: relative;
 
   .content {
-    margin: 16px;
+    margin: 16px 0 16px 16px;
   }
   .header {
     display: flex;
@@ -59,10 +59,10 @@
       width: 25%;
       min-height: 100%;
       position: relative;
-      &:nth-of-type(3) {
+      &:last-of-type {
         width: 50% !important;
-        filter: blur(4px) grayscale(40%);
-        -webkit-filter: blur(4px) grayscale(40%);
+        filter: blur(4px) grayscale(50%);
+        -webkit-filter: blur(4px) grayscale(50%);
       }
     }
     .overlayText {
@@ -72,7 +72,7 @@
       font-size: $font-subheader;
       font-weight: $bold;
       text-align: center;
-      -webkit-text-stroke: 0.25px $white;
+      color: $white;
     }
   }
 }

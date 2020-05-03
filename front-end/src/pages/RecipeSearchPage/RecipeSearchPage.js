@@ -25,7 +25,7 @@ const RecipeSearchPage = () => {
         {!loading &&
           !error &&
           data.getRecipes.map(recipe => (
-            <div key={recipe.id}>
+            <div key={recipe.id} style={{ margin: '12px 0' }}>
               <RecipeSearchItem recipe={recipe} />
             </div>
           ))}
