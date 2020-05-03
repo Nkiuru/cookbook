@@ -7,6 +7,16 @@ const { ApolloError } = require('apollo-server-express');
 const createList = async (_, args, { user }) => {
   args.owner = user.id;
   let list = await List.create(args);
+  if (list.recipes) {
+    for await (const recipe of list.recipes) {
+      const r = await Recipe.findById(recipe);
+      if (!r.lists) {
+        r.lists = [];
+      }
+      r.lists.push(list.id);
+      await r.save();
+    }
+  }
   return await list.populate('owner tags categories recipes followers').execPopulate();
 };
 
@@ -19,6 +29,16 @@ const modifyList = async (_, args, { user }) => {
     throw new ApolloError('Unauthorized');
   }
   const list = await List.findByIdAndUpdate(args.id, args, { new: true });
+  if (args.recipes) {
+    for await (const recipe of args.recipes) {
+      const r = await Recipe.findById(recipe);
+      if (!r.lists) {
+        r.lists = [];
+      }
+      r.lists.push(list.id);
+      await r.save();
+    }
+  }
   return await list.populate('owner tags categories recipes followers').execPopulate();
 };
 
@@ -31,7 +51,11 @@ const deleteList = async (_, args, { user }) => {
     throw new ApolloError('Unauthorized');
   }
   const list = await List.findByIdAndDelete(args.id);
-  //TODO: Delete list refs from recipe & user
+  for await (const recipe of list.recipes) {
+    await Recipe.findByIdAndUpdate(recipe, {
+      $pull: { lists: list.id },
+    });
+  }
   return `${list.name} deleted`;
 };
 

@@ -45,8 +45,9 @@ const RecipeListCard = ({ list }) => {
         <div className={styles.description}>{list.description}</div>
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           {list.tags.map(tag => (
-            // eslint-disable-next-line react/jsx-key
-            <Tag tag={tag} />
+            <div key={tag._id}>
+              <Tag tag={tag} />
+            </div>
           ))}
         </div>
         <figure className={styles.imgContainer}>

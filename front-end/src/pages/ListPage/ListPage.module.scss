@@ -1,0 +1,39 @@
+@import '../../vars.scss';
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 64px;
+  margin: 16px;
+
+  .title {
+    font-family: $font;
+    font-size: $font-large;
+    font-weight: $medium;
+    text-transform: uppercase;
+  }
+  button {
+    width: 128px;
+  }
+}
+
+.subheader {
+  font-family: $font;
+  font-size: $font-subheader;
+  font-weight: $medium;
+  margin-left: 16px;
+  margin-right: 16px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  button {
+    width: 128px;
+  }
+}
+.recipes {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
