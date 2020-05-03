@@ -25,6 +25,6 @@ server.applyMiddleware({
   path: '/graphql',
   app,
 });
-app.use('/static', express.static(path.join(__dirname, '../uploads')));
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 module.exports = app;
