@@ -8,13 +8,15 @@ import Button from '../../components/Button';
 import LoginSignupDialog from '../../components/LoginModal';
 import pizza from '../../assets/pizza.jpg';
 import salmon from '../../assets/salmon.jpeg';
+import { useHistory } from 'react-router-dom';
 
 const HomePage = () => {
+  const history = useHistory();
   const [showLoginDialog, setShowLoginDialog] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
   const { loading, error, data } = useQuery(GET_ME);
-  const { login } = useMutation(LOGIN);
-  const { signup } = useMutation(SIGNGUP);
+  const [login] = useMutation(LOGIN);
+  const [signup] = useMutation(SIGNGUP);
   const classes = [styles.page];
   (showDialog || showLoginDialog) && classes.push(styles.blurred);
   const handleUserKeyPress = useCallback(event => {
@@ -36,6 +38,7 @@ const HomePage = () => {
   const saveCredentials = ({ data }) => {
     localStorage.setItem('token', data.login.token);
     localStorage.setItem('user', JSON.stringify(data.login.user));
+    history.push('/dashboard');
     setShowLoginDialog(false);
   };
   const loginHandler = ({ email, password }) => {
@@ -45,6 +48,7 @@ const HomePage = () => {
     signup({ variables: { email, password, firstName, lastName } }).then(() => {
       window.alert('Account created');
       setShowDialog(false);
+      setShowLoginDialog(true);
     });
   };
   if (loading) return <p>Loading...</p>;

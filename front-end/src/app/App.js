@@ -34,17 +34,17 @@ const client = new ApolloClient({
 function App() {
   const location = useLocation();
   const home = () => <HomePage />;
-  const dashboard = () => (auth() ? <Redirect to="/" /> : <DashboardPage />);
-  const profile = () => (auth() ? <Redirect to="/" /> : <ProfilePage />);
-  const recipes = () => (auth() ? <Redirect to="/" /> : <RecipesPage />);
-  const recipeDetail = () => (auth() ? <Redirect to="/" /> : <RecipeDetailPage />);
-  const recipeEdit = () => (auth() ? <Redirect to="/" /> : <AddEditRecipePage />);
-  const recipeSearch = () => (auth() ? <Redirect to="/" /> : <RecipeSearchPage />);
-  const listSearch = () => (auth() ? <Redirect to="/" /> : <ListSearchPage />);
-  const listEdit = () => (auth() ? <Redirect to="/" /> : <AddEditListPage />);
-  const list = () => (auth() ? <Redirect to="/" /> : <ListPage />);
-  const settings = () => (auth() ? <Redirect to="/" /> : <ProfileEditPage />);
-  const user = () => (auth() ? <Redirect to="/" /> : <UserPage />);
+  const dashboard = () => (!auth() ? <Redirect to="/" /> : <DashboardPage />);
+  const profile = () => (!auth() ? <Redirect to="/" /> : <ProfilePage />);
+  const recipes = () => (!auth() ? <Redirect to="/" /> : <RecipesPage />);
+  const recipeDetail = () => (!auth() ? <Redirect to="/" /> : <RecipeDetailPage />);
+  const recipeEdit = () => (!auth() ? <Redirect to="/" /> : <AddEditRecipePage />);
+  const recipeSearch = () => (!auth() ? <Redirect to="/" /> : <RecipeSearchPage />);
+  const listSearch = () => (!auth() ? <Redirect to="/" /> : <ListSearchPage />);
+  const listEdit = () => (!auth() ? <Redirect to="/" /> : <AddEditListPage />);
+  const list = () => (!auth() ? <Redirect to="/" /> : <ListPage />);
+  const settings = () => (!auth() ? <Redirect to="/" /> : <ProfileEditPage />);
+  const user = () => (!auth() ? <Redirect to="/" /> : <UserPage />);
   return (
     <ApolloProvider client={client}>
       <Switch location={location}>
