@@ -1,0 +1,21 @@
+@import '../../vars.scss';
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 64px;
+
+  .title {
+    font-family: $font;
+    font-size: $font-large;
+    font-weight: $medium;
+    text-transform: uppercase;
+  }
+}
+
+.results {
+  width: 60%;
+  margin: auto;
+}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './RecipeSearchPage.module.scss';
 import PageContainer from '../../containers/PageContainer';
 import Toolbar from '../../components/Toolbar';
@@ -18,14 +18,18 @@ const RecipeSearchPage = () => {
   return (
     <PageContainer>
       <Toolbar />
-      <h1 style={{ marginTop: '16px', textAlign: 'center' }}>Recipe search page</h1>
-      {!loading &&
-        !error &&
-        data.getRecipes.map(recipe => (
-          <div key={recipe.id}>
-            <RecipeSearchItem recipe={recipe} />
-          </div>
-        ))}
+      <div className={styles.header}>
+        <div className={styles.title}>Search results</div>
+      </div>
+      <div className={styles.results}>
+        {!loading &&
+          !error &&
+          data.getRecipes.map(recipe => (
+            <div key={recipe.id}>
+              <RecipeSearchItem recipe={recipe} />
+            </div>
+          ))}
+      </div>
     </PageContainer>
   );
 };
