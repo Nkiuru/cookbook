@@ -9,8 +9,10 @@ import { useQuery } from '@apollo/react-hooks';
 import { GET_RECIPES } from '../../utils/queries/recipes';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import IconButton from '@material-ui/core/IconButton';
+import { useHistory } from 'react-router-dom';
 
 const DashboardPage = () => {
+  const history = useHistory();
   const [recipeStart, setRecipeStart] = useState(0);
   const [listStart, setListStart] = useState(0);
   const user = localStorage.getItem('user');
@@ -18,8 +20,12 @@ const DashboardPage = () => {
   const { loading: listLoading, error: listError, data: listData } = useQuery(GET_RECIPES, {
     variables: { author: user.id },
   });
-  const openSearch = () => {};
-  const addRecipe = () => {};
+  const openSearch = () => {
+    history.push('/recipes/search');
+  };
+  const addRecipe = () => {
+    history.push('/recipe/0/edit');
+  };
   return (
     <PageContainer>
       <Toolbar />
@@ -66,7 +72,7 @@ const DashboardPage = () => {
           <p className={styles.expand}>expand</p>
           <IconButton
             onClick={() => {
-              setRecipeStart(recipeStart + 4);
+              setListStart(listStart + 4);
             }}
           >
             <KeyboardArrowDownIcon />

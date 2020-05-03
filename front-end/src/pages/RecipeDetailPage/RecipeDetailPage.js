@@ -2,8 +2,11 @@ import React from 'react';
 import styles from './RecipeDetailPage.module.scss';
 import PageContainer from '../../containers/PageContainer';
 import Toolbar from '../../components/Toolbar';
+import { useLocation } from 'react-router';
 
 const RecipeDetailPage = () => {
+  const location = useLocation();
+  const recipe = location.state.recipe;
   return (
     <PageContainer>
       <Toolbar />

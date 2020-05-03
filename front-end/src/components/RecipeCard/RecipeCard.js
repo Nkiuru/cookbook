@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { AccountCircle } from '@material-ui/icons';
 import IconButton from '@material-ui/core/IconButton';
 import { useHistory } from 'react-router-dom';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const RecipeCard = ({ recipe }) => {
   const history = useHistory();
@@ -14,21 +15,30 @@ const RecipeCard = ({ recipe }) => {
   const primaryImage = recipe.images.find(img => {
     return img.primary;
   });
-  console.log(primaryImage);
   const openRecipe = () => {
-    history.push(`/recipe/${recipe.id}`);
+    history.push({
+      pathname: `/recipe/${recipe.id}`,
+      state: { recipe },
+    });
   };
 
-  const openTag = tag => {};
+  const openTag = tag => {
+    history.push({
+      pathname: '/recipes/search',
+      state: { tags: [tag._id] },
+    });
+  };
 
   return (
     <div className={styles.card}>
       <div className={styles.content}>
         <div className={styles.header}>
           <div className={styles.title}>{recipe.title}</div>
-          <IconButton onClick={openProfile}>
-            <AccountCircle />
-          </IconButton>
+          <Tooltip title={recipe.author.fullName}>
+            <IconButton onClick={openProfile}>
+              <AccountCircle />
+            </IconButton>
+          </Tooltip>
         </div>
         <div className={styles.description}>{recipe.description}</div>
         <div style={{ display: 'flex', flexDirection: 'row' }}>
@@ -37,7 +47,7 @@ const RecipeCard = ({ recipe }) => {
               key={tag._id}
               className={styles.tag}
               onClick={() => {
-                openTag(tag._id);
+                openTag(tag);
               }}
             >
               {tag.name}
