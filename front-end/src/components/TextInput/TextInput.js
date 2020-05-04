@@ -21,7 +21,7 @@ const TextInput = ({ label, style, superClass, ...props }) => {
 TextInput.propTypes = {
   id: PropTypes.string,
   name: PropTypes.string,
-  type: PropTypes.oneOf(['tel', 'text', 'time', 'date', 'email', 'password', 'datetime-local']).isRequired,
+  type: PropTypes.oneOf(['tel', 'text', 'time', 'date', 'email', 'password', 'datetime-local', 'number']).isRequired,
   label: PropTypes.string,
   value: PropTypes.string,
   style: PropTypes.object,

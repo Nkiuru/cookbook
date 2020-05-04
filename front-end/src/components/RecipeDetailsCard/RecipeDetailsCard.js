@@ -169,7 +169,6 @@ const RecipeDetailsCard = ({ recipe }) => {
         onNegativeClicked={() => setShowDialog(false)}
       >
         <div className={styles.container}>
-          <div>Select List</div>
           <InputLabel id="label">List</InputLabel>
           <Select
             labelId="label"

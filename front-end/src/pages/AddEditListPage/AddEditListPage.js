@@ -23,7 +23,7 @@ const AddEditListPage = () => {
   return (
     <PageContainer>
       <Toolbar />
-      {list ? <EditList list={list} /> : <AddList />}
+      {list ? <EditList list={list.list} /> : <AddList />}
     </PageContainer>
   );
 };
