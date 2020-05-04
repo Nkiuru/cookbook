@@ -166,6 +166,13 @@ export const GET_RECIPES = gql`
         id
         name
       }
+      ratings {
+        score
+        user {
+          id
+        }
+      }
+      rating
     }
   }
 `;

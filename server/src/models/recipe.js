@@ -159,6 +159,7 @@ recipeSchema.index(
   { weights: { title: 5, description: 2, 'ingredients.ingredient': 2, 'instructions.text': 1 } },
 );
 
+recipeSchema.set('toObject', { getters: true });
 recipeSchema.statics.findRecipes = function(query) {
   return this.find(query, { isDeleted: false });
 };
@@ -169,7 +170,7 @@ recipeSchema.statics.findDeletedRecipes = function(query) {
 
 recipeSchema.statics.populateRecipe = function(recipe) {
   return recipe.populate({
-    path: 'originalAuthor author reviews categories tags lists images.file instructions.image',
+    path: 'originalAuthor author reviews categories tags lists images.file instructions.image ratings.user',
     populate: [
       {
         path: 'user',
@@ -179,8 +180,12 @@ recipeSchema.statics.populateRecipe = function(recipe) {
   });
 };
 
-recipeSchema.virtual('rating').get(function() {
-  return Recipe.aggregate([{ $group: { _id: null, averageRating: { $avg: '$ratings.score' } } }]);
+recipeSchema.virtual('rating').get(async function() {
+  const avg = await Recipe.aggregate([{ $project: { averageRating: { $avg: '$ratings.score' } } }]);
+  const a = avg.find(x => {
+    return x._id.toString() === this._id.toString();
+  });
+  return a.averageRating;
 });
 
 const Recipe = mongoose.model('recipe', recipeSchema);

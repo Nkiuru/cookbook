@@ -48,6 +48,7 @@ const typeDefs = gql`
     reviews: [Review]
     categories: [Category]
     lists: [List]
+    rating: Float
   }
 
   type File {

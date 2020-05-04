@@ -11,6 +11,8 @@ import { AccountCircle } from '@material-ui/icons';
 import IconButton from '@material-ui/core/IconButton';
 import moment from 'moment';
 import Divider from '@material-ui/core/Divider';
+import RecipeDetailsCard from '../../components/RecipeDetailsCard';
+import IngredientsCard from '../../components/IngredientsCard';
 
 const RecipeDetailPage = () => {
   const location = useLocation();
@@ -24,7 +26,10 @@ const RecipeDetailPage = () => {
   return (
     <PageContainer>
       <Toolbar />
-      <h1 style={{ marginTop: '16px', textAlign: 'center' }}>Recipe detail page</h1>
+      <div className={styles.cardContainer}>
+        <RecipeDetailsCard recipe={recipe} />
+        <IngredientsCard ingredients={recipe.ingredients} equipment={recipe.equipment} />
+      </div>
       <div className={styles.instructions}>
         <h2 className={styles.subtitle}>Instructions</h2>
         {recipe.instructions.map(ins => (
