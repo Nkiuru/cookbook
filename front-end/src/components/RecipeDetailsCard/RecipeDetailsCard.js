@@ -62,7 +62,7 @@ const RecipeDetailsCard = ({ recipe }) => {
   const deleteRecipe = () => {
     deleteRecipeOp({ variables: { id: recipe.id } }).then(() => {
       window.alert('Recipe deleted');
-      setShowDialog(false);
+      setShowDeleteDialog(false);
       history.goBack();
     });
   };
@@ -149,7 +149,6 @@ const RecipeDetailsCard = ({ recipe }) => {
             <div className={styles.infoText}>
               <div>{recipe.author.fullName}</div>
             </div>
-            <div style={{ display: 'flex' }} />
             {recipe.author.id === user.id && (
               <Tooltip title={'Delete Recipe'}>
                 <IconButton onClick={() => setShowDeleteDialog(true)} style={{ marginLeft: 'auto' }}>
