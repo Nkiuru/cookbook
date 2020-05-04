@@ -5,8 +5,11 @@ const { ApolloError } = require('apollo-server-express');
 const createReview = async (_, args, { user }) => {
   console.log(args);
   args.user = user.id;
-  if (await Recipe.findById(args.recipe)) {
+  const r = await Recipe.findById(args.recipe);
+  if (r) {
     const review = await Review.create(args);
+    r.reviews.push(review._id);
+    await r.save();
     return await review.populate('user recipe').execPopulate();
   } else {
     throw new ApolloError('Recipe does not exist');

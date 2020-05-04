@@ -33,7 +33,7 @@ const client = new ApolloClient({
 
 function App() {
   const location = useLocation();
-  const home = () => <HomePage />;
+  const home = () => (auth() ? <Redirect to="/dashboard" /> : <HomePage />);
   const dashboard = () => (!auth() ? <Redirect to="/" /> : <DashboardPage />);
   const profile = () => (!auth() ? <Redirect to="/" /> : <ProfilePage />);
   const recipes = () => (!auth() ? <Redirect to="/" /> : <RecipesPage />);

@@ -9,3 +9,56 @@
   font-family: $font;
   font-weight: $medium;
 }
+
+.photos {
+  margin: 16px;
+
+  .carousel {
+    max-width: 60%;
+    max-height: 40%;
+    margin: auto;
+  }
+}
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-left: 16px;
+}
+
+.reviews {
+  margin: 16px 16px 48px 16px;
+  font-family: $font;
+
+  .review {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    margin: auto;
+  }
+
+  .row {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .acc {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: $bold;
+  }
+
+  .time {
+    font-size: $font-small;
+    color: $text-light;
+    font-weight: $medium;
+  }
+
+  .reviewContent {
+    margin: 12px 48px;
+    font-weight: $medium;
+  }
+}

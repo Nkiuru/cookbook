@@ -168,7 +168,15 @@ recipeSchema.statics.findDeletedRecipes = function(query) {
 };
 
 recipeSchema.statics.populateRecipe = function(recipe) {
-  return recipe.populate('originalAuthor author reviews categories tags lists images.file instructions.image');
+  return recipe.populate({
+    path: 'originalAuthor author reviews categories tags lists images.file instructions.image',
+    populate: [
+      {
+        path: 'user',
+        model: 'user',
+      },
+    ],
+  });
 };
 
 recipeSchema.virtual('rating').get(function() {

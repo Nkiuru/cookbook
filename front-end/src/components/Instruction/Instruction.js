@@ -1,18 +1,7 @@
 import React from 'react';
 import styles from './Instruction.module.scss';
 import PropTypes from 'prop-types';
-/*
-      instructions {
-        step
-        text
-        image {
-          _id
-          filename
-          mimetype
-          path
-        }
-      }
- */
+
 const Instruction = ({ instruction }) => {
   return (
     <div className={styles.container}>
