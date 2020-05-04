@@ -19,7 +19,7 @@ const RecipeSearchPage = () => {
     <PageContainer>
       <Toolbar />
       <div className={styles.header}>
-        <div className={styles.title}>Search results</div>
+        <div className={styles.title}>{!loading && data.getRecipes.length} Search results</div>
       </div>
       <div className={styles.results}>
         {!loading &&

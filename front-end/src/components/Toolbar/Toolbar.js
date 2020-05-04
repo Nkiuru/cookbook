@@ -11,8 +11,10 @@ const Toolbar = () => {
   const [showBrowse, setShowBrowse] = useState(false);
   const history = useHistory();
   const handleSubmit = ({ search }) => {
-    // TODO: SEARCH & navigate to recipe search page
-    console.log(search);
+    history.push({
+      pathname: '/recipes/search',
+      state: { searchTerm: search },
+    });
   };
   const openProfile = () => {
     const route = '/profile';

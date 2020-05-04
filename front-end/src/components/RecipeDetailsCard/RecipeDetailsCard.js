@@ -9,6 +9,7 @@ import ScheduleIcon from '@material-ui/icons/Schedule';
 import ShowChartIcon from '@material-ui/icons/ShowChart';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import Divider from '@material-ui/core/Divider';
+import PieChartIcon from '@material-ui/icons/PieChart';
 import Tag from '../Tag';
 import { AccountCircle } from '@material-ui/icons';
 import moment from 'moment';
@@ -77,6 +78,10 @@ const RecipeDetailsCard = ({ recipe }) => {
         <div className={styles.row}>
           <BarChartIcon className={styles.icon} />
           <div className={styles.infoText}>{recipe.calories} kcal</div>
+        </div>
+        <div className={styles.row}>
+          <PieChartIcon className={styles.icon} />
+          <div className={styles.infoText}>{recipe.portions} portions</div>
         </div>
         <div className={styles.row}>
           <div className={styles.infoText}>{recipe.description}</div>
