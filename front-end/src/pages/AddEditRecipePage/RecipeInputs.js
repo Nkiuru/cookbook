@@ -15,6 +15,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Divider from '@material-ui/core/Divider';
 import Tooltip from '@material-ui/core/Tooltip';
+import { Carousel } from 'react-responsive-carousel';
 
 export const DifficultySelect = () => {
   return (
@@ -125,7 +126,7 @@ export const TagCategoryRow = () => {
   const { loading: catLoading, error: catError, data: categories } = useQuery(GET_CATEGORIES);
   const { loading: tagLoading, error: tagError, data: tags } = useQuery(GET_TAGS);
   return (
-    <div className={styles.row}>
+    <div className={styles.row} style={{ marginTop: '32px' }}>
       <div style={{ flex: 1, marginRight: '16px' }}>
         <InputLabel htmlFor="tagLabel">Tags</InputLabel>
         <Field component={Select} name="tags" multiple inputProps={{ id: 'tag' }} style={{ width: '100%' }}>
@@ -155,98 +156,107 @@ export const TagCategoryRow = () => {
 };
 
 export const InstructionsInput = ({ values }) => {
-  const getImage = file => {
-    console.log(file);
-    return URL.createObjectURL(file);
-  };
   return (
-    <div>
-      <div className={styles.header}>
-        <div className={styles.subTitle}>Instructions</div>
-      </div>
-      <FieldArray
-        name="instructions"
-        render={arrayHelpers => (
-          <div>
-            {values.instructions.map((i, index) => (
-              <div key={index}>
-                <div className={styles.cardRow}>
-                  <TextInput
-                    name={`instructions.${index}.step`}
-                    type="number"
-                    placeholder="1"
-                    label="Step number"
-                    superClass={styles.fullWidth}
-                  />
-                  <TextInput
-                    name={`instructions.${index}.text`}
-                    type="text"
-                    placeholder="e.g. Whisk eggs"
-                    label="Instructions"
-                    superClass={styles.fullWidth}
-                  />
-                  <Field component={SimpleFileUpload} name={`instructions.${index}.image`} label="Image for the step" />
-                  <IconButton onClick={() => arrayHelpers.remove(index)}>
-                    <RemoveIcon />
-                  </IconButton>
-                </div>
-                <div className={styles.imgContainer}>
-                  {i.image && <img className={styles.img} src={getImage(i.image)} alt="uploaded image" />}
-                </div>
-              </div>
-            ))}
-            <IconButton
-              onClick={() => arrayHelpers.push({ step: values.instructions.length + 1, text: '', image: null })}
-              className={styles.addBtn}
-            >
-              <AddIcon />
-            </IconButton>
+    <FieldArray
+      name="instructions"
+      render={arrayHelpers => (
+        <div>
+          <div className={styles.titleRow}>
+            <div style={{ width: '48px' }} />
+            <div className={styles.subTitle}>Instructions</div>
+            <Tooltip title="Add Step">
+              <IconButton onClick={() => arrayHelpers.push({ amount: '', ingredient: '' })} className={styles.addBtn}>
+                <AddIcon />
+              </IconButton>
+            </Tooltip>
           </div>
-        )}
-      />
-    </div>
-  );
-};
-
-export const ImageInput = ({ values }) => {
-  return (
-    <div>
-      <div className={styles.header}>
-        <div className={styles.subTitle}>Photos</div>
-      </div>
-      <FieldArray
-        name="images"
-        render={arrayHelpers => (
-          <div>
-            {values.images.map((i, index) => (
-              <div key={index} className={styles.cardRow}>
+          {values.instructions.map((i, index) => (
+            <div key={index}>
+              <div className={styles.cardRow}>
                 <TextInput
-                  name={`images.${index}.altText`}
-                  type="text"
-                  placeholder="Photo caption"
-                  label="Caption"
+                  name={`instructions.${index}.step`}
+                  type="number"
+                  placeholder="1"
+                  label="Step number"
                   superClass={styles.fullWidth}
                 />
-                <FormControlLabel
-                  control={<Field component={Switch} name="switch" type="checkbox" />}
-                  label="Cover image"
+                <TextInput
+                  name={`instructions.${index}.text`}
+                  type="text"
+                  placeholder="e.g. Whisk eggs"
+                  label="Instructions"
+                  superClass={styles.fullWidth}
                 />
-                <Field component={SimpleFileUpload} name={`images.${index}.file`} label="Image of the dish" />
+                <Field component={SimpleFileUpload} name={`instructions.${index}.image`} label="Image for the step" />
                 <IconButton onClick={() => arrayHelpers.remove(index)}>
                   <RemoveIcon />
                 </IconButton>
               </div>
-            ))}
-            <IconButton
-              onClick={() => arrayHelpers.push({ primary: false, altText: '', file: null })}
-              className={styles.addBtn}
-            >
-              <AddIcon />
-            </IconButton>
+              <div className={styles.imgContainer}>
+                {i.image && <img className={styles.img} src={getImage(i.image)} alt="uploaded image" />}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    />
+  );
+};
+
+const getImage = file => {
+  console.log(file);
+  if (!file) return;
+  return URL.createObjectURL(file);
+};
+
+export const ImageInput = ({ values }) => {
+  return (
+    <FieldArray
+      name="images"
+      render={arrayHelpers => (
+        <div>
+          <div className={styles.titleRow}>
+            <div style={{ width: '48px' }} />
+            <div className={styles.subTitle}>Photos</div>
+            <Tooltip title="Add Photo">
+              <IconButton
+                onClick={() => arrayHelpers.push({ primary: false, altText: '', file: null })}
+                className={styles.addBtn}
+              >
+                <AddIcon />
+              </IconButton>
+            </Tooltip>
           </div>
-        )}
-      />
-    </div>
+          {values.images.map((i, index) => (
+            <div key={index} className={styles.cardRow}>
+              <TextInput
+                name={`images.${index}.altText`}
+                type="text"
+                placeholder="Photo caption"
+                label="Caption"
+                superClass={styles.fullWidth}
+              />
+              <FormControlLabel
+                control={<Field component={Switch} name="switch" type="checkbox" />}
+                label="Cover image"
+              />
+              <Field component={SimpleFileUpload} name={`images.${index}.file`} label="Image of the dish" />
+              <IconButton onClick={() => arrayHelpers.remove(index)}>
+                <RemoveIcon />
+              </IconButton>
+            </div>
+          ))}
+          <Carousel className={styles.carousel}>
+            {values.images[0].file &&
+              values.images.map((img, index) => (
+                <div key={index}>
+                  <img src={getImage(img.file)} alt="img" />
+                </div>
+              ))}
+          </Carousel>
+        </div>
+      )}
+    />
   );
 };
 
