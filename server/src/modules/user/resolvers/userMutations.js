@@ -4,6 +4,9 @@ const bcrypt = require('bcrypt');
 
 const updateUser = async (_, args, { user }) => {
   args = args.user;
+  if (!args.id) {
+    args.id = user._id;
+  }
   const dbUser = await User.findById(args.id);
   if (dbUser.id.toString() !== user.id.toString()) {
     throw new ApolloError('Unauthorized');
