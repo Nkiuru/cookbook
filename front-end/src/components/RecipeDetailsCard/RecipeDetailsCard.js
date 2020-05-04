@@ -41,7 +41,7 @@ const RecipeDetailsCard = ({ recipe }) => {
           alt={primaryImage.altText}
         />
       </div>
-      <Divider orientation={'vertical'} />
+      <Divider orientation="vertical" flexItem />
       <div className={styles.infoContainer}>
         <div className={styles.titleContainer}>
           <div className={styles.title}>{recipe.title}</div>
@@ -85,7 +85,7 @@ const RecipeDetailsCard = ({ recipe }) => {
         <Divider />
         <div className={styles.row}>
           {recipe.tags.map(tag => (
-            <div key={tag._id} style={{ margin: '4px' }}>
+            <div key={tag._id} style={{ margin: '4px 4px 4px 0' }}>
               <Tag tag={tag} />
             </div>
           ))}
