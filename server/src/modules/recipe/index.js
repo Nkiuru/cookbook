@@ -107,7 +107,7 @@ const typeDefs = gql`
     portions: Int
     notes: String
     tags: [ID!]
-    categories: [CategoryInput!]
+    categories: [ID!]
   }
 
   input EquipmentInput {

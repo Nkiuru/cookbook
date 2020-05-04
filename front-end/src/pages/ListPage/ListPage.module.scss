@@ -37,3 +37,25 @@
   flex-direction: row;
   flex-wrap: wrap;
 }
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  margin-bottom: 8px;
+  margin-top: 8px;
+}
+
+.subtitle {
+  font-family: $font;
+  font-size: $font-medium;
+  font-weight: $medium;
+  margin-left: 16px;
+  margin-right: 16px;
+}
+
+.body {
+  font-family: $font;
+  font-size: $font-medium;
+  font-weight: $bold;
+  color: $text-light;
+}
