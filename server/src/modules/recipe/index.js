@@ -83,7 +83,7 @@ const typeDefs = gql`
 
   type Rating {
     user: User!
-    score: Int!
+    score: Float!
   }
 
   enum Difficulty {
@@ -151,7 +151,7 @@ const typeDefs = gql`
 
   input RecipeRatingInput {
     id: ID!
-    score: Int!
+    score: Float!
   }
 `;
 

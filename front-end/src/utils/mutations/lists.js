@@ -21,3 +21,11 @@ export const DELETE_LIST = gql`
     deleteList(id: $id)
   }
 `;
+
+export const ADD_RECIPE_TO_LIST = gql`
+  mutation addRecipeToList($id: ID!, $recipe: ID!) {
+    addRecipeToList(id: $id, recipe: $recipe) {
+      id
+    }
+  }
+`;

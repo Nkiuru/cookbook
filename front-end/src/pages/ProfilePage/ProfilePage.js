@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './ProfilePage.module.scss';
 import PageContainer from '../../containers/PageContainer';
 import Toolbar from '../../components/Toolbar';
@@ -12,10 +12,12 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import { useHistory } from 'react-router-dom';
+import Dialog from '../../components/Dialog';
 
 const ProfilePage = () => {
   const history = useHistory();
   const [updateUser] = useMutation(UPDATE_USER);
+  const [showDialog, setShowDialog] = useState(false);
   const user = JSON.parse(localStorage.getItem('user'));
   const initialValues = {
     email: user.email,
@@ -38,6 +40,9 @@ const ProfilePage = () => {
     localStorage.clear();
     history.push('/');
   };
+  const handleLogoutClick = () => {
+    logout();
+  };
   return (
     <PageContainer>
       <Toolbar />
@@ -45,7 +50,7 @@ const ProfilePage = () => {
         <div style={{ width: '48px' }} />
         <div className={styles.title}>Profile</div>
         <Tooltip title={'Log out'}>
-          <IconButton onClick={logout}>
+          <IconButton onClick={() => setShowDialog(true)}>
             <ExitToAppIcon />
           </IconButton>
         </Tooltip>
@@ -73,6 +78,17 @@ const ProfilePage = () => {
             </Form>
           )}
         </Formik>
+        <Dialog
+          header={'Log out'}
+          visible={showDialog}
+          onOutsideClick={() => setShowDialog(false)}
+          positiveLabel={'Log out'}
+          negativeLabel={'Cancel'}
+          onPositiveClicked={handleLogoutClick}
+          onNegativeClicked={() => setShowDialog(false)}
+        >
+          <div className={styles.text}>Are you sure you want to log out?</div>
+        </Dialog>
       </div>
     </PageContainer>
   );

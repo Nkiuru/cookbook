@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './RecipeDetailsCard.module.scss';
 import PropTypes from 'prop-types';
 import AddIcon from '@material-ui/icons/Add';
@@ -15,19 +15,38 @@ import { AccountCircle } from '@material-ui/icons';
 import moment from 'moment';
 import { useHistory } from 'react-router-dom';
 import Category from '../Category';
+import Dialog from '../Dialog';
+import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import { useMutation, useQuery } from '@apollo/react-hooks';
+import { GET_MY_LISTS } from '../../utils/queries/lists';
+import RecipeListCard from '../RecipeListCard';
+import { ADD_RECIPE_TO_LIST } from '../../utils/mutations/lists';
+import { ADD_RECIPE_RATING } from '../../utils/mutations/recipes';
 
 const RecipeDetailsCard = ({ recipe }) => {
   const history = useHistory();
+  const [showDialog, setShowDialog] = useState(false);
+  const [selected, setSelected] = useState('');
+  const { loading: listLoading, error: listError, data: listData } = useQuery(GET_MY_LISTS);
+  const [addRecipe] = useMutation(ADD_RECIPE_TO_LIST);
+  const [addRating] = useMutation(ADD_RECIPE_RATING);
 
   const primaryImage = recipe.images.find(img => {
     return img.primary;
   });
   const addToList = () => {
-    //TODO: Open modal
+    addRecipe({ variables: { id: selected, recipe: recipe.id } }).then(() => {
+      window.alert('Added');
+      setShowDialog(false);
+    });
   };
   const rateRecipe = (event, value) => {
-    //TODO: add recipe rating
     console.log(value);
+    addRating({ variables: { recipe: recipe.id, score: value } }).then(() => {
+      window.alert('Rating added');
+    });
   };
 
   const openUser = () => {
@@ -50,7 +69,7 @@ const RecipeDetailsCard = ({ recipe }) => {
         <div className={styles.titleContainer}>
           <div className={styles.title}>{recipe.title}</div>
           <Tooltip title={'Add to list'}>
-            <IconButton onClick={addToList}>
+            <IconButton onClick={() => setShowDialog(true)}>
               <AddIcon />
             </IconButton>
           </Tooltip>
@@ -122,6 +141,35 @@ const RecipeDetailsCard = ({ recipe }) => {
           </div>
         </div>
       </div>
+      <Dialog
+        header={'Add to list'}
+        visible={showDialog}
+        onOutsideClick={() => setShowDialog(false)}
+        positiveLabel={'Add'}
+        negativeLabel={'Cancel'}
+        onPositiveClicked={addToList}
+        onNegativeClicked={() => setShowDialog(false)}
+      >
+        <div className={styles.container}>
+          <div>Select List</div>
+          <InputLabel id="label">List</InputLabel>
+          <Select
+            labelId="label"
+            id="select"
+            value={selected}
+            style={{ width: '200px' }}
+            onChange={event => setSelected(event.target.value)}
+          >
+            {!listLoading &&
+              !listError &&
+              listData.getMyLists.map(list => (
+                <MenuItem key={list.id} value={list.id}>
+                  {list.name}
+                </MenuItem>
+              ))}
+          </Select>
+        </div>
+      </Dialog>
     </div>
   );
 };

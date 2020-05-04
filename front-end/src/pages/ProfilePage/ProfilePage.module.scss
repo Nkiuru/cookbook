@@ -28,3 +28,9 @@
   align-items: center;
   justify-content: space-between;
 }
+.text {
+  font-family: $font;
+  font-size: $font-medium;
+  font-weight: $medium;
+  color: $white;
+}

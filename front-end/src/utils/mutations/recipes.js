@@ -229,3 +229,11 @@ export const DELETE_RECIPE = gql`
     deleteRecipe(id: $id)
   }
 `;
+
+export const ADD_RECIPE_RATING = gql`
+  mutation rateRecipe($recipe: ID!, $score: Float!) {
+    rateRecipe(recipe: { id: $recipe, score: $score }) {
+      id
+    }
+  }
+`;
