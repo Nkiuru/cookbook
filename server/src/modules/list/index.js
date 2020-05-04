@@ -6,6 +6,7 @@ const typeDefs = gql`
     getLists(searchTerm: String): [List]
     getList(id: ID!): List
     getMyLists: [List] @isAuthenticated
+    getUsersLists(userId: ID!): [List] @isAuthenticated
   }
 
   extend type Mutation {

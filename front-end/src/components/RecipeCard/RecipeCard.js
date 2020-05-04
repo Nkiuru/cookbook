@@ -11,7 +11,10 @@ const RecipeCard = ({ recipe }) => {
   const history = useHistory();
 
   const openProfile = () => {
-    history.push(`/user/${recipe.author.userId}`);
+    history.push({
+      pathname: `/user/${recipe.author.id}`,
+      state: { user: recipe.author },
+    });
   };
   const primaryImage = recipe.images.find(img => {
     return img.primary;

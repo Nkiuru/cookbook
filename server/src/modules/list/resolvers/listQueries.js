@@ -27,8 +27,26 @@ const getMyLists = async (_, args, { user }) => {
     .exec();
 };
 
+const getUsersLists = async (_, { userId }) => {
+  return List.find({ owner: userId })
+    .populate({
+      path: 'owner tags categories recipes followers',
+      populate: [
+        {
+          path: 'images.file',
+          model: 'file',
+        },
+        {
+          path: 'author',
+        },
+      ],
+    })
+    .exec();
+};
+
 module.exports = {
   getList,
   getLists,
   getMyLists,
+  getUsersLists,
 };

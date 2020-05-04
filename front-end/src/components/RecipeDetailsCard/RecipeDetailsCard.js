@@ -12,25 +12,28 @@ import Divider from '@material-ui/core/Divider';
 import Tag from '../Tag';
 import { AccountCircle } from '@material-ui/icons';
 import moment from 'moment';
+import { useHistory } from 'react-router-dom';
 
 const RecipeDetailsCard = ({ recipe }) => {
+  const history = useHistory();
+
   const primaryImage = recipe.images.find(img => {
     return img.primary;
   });
   const addToList = () => {
     //TODO: Open modal
   };
-  console.log(recipe);
-  const hasRated = () => {
-    const id = localStorage.getItem('user').id;
-    return recipe.ratings.find(rating => id === rating.user.id);
-  };
   const rateRecipe = (event, value) => {
     //TODO: add recipe rating
     console.log(value);
   };
 
-  const openUser = () => {};
+  const openUser = () => {
+    history.push({
+      pathname: `/user/${recipe.author.id}`,
+      state: { user: recipe.author },
+    });
+  };
 
   return (
     <div className={styles.card}>

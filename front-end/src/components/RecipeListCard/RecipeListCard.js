@@ -9,9 +9,11 @@ import Tag from '../Tag';
 
 const RecipeListCard = ({ list }) => {
   const history = useHistory();
-  console.log(list);
   const openProfile = () => {
-    history.push(`/user/${list.owner.userId}`);
+    history.push({
+      pathname: `/user/${list.owner.id}`,
+      state: { user: list.owner },
+    });
   };
   const primaryImages = list.recipes
     .filter(recipe => {
