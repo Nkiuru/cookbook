@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch, Redirect, useLocation } from 'react-router';
 import './App.scss';
-import ApolloClient from 'apollo-boost';
+import { ApolloClient } from 'apollo-client';
 import { ApolloProvider } from '@apollo/react-hooks';
 import HomePage from '../pages/HomePage';
 import DashboardPage from '../pages/DashboardPage';
@@ -16,19 +16,43 @@ import ListSearchPage from '../pages/ListSearchPage';
 import AddEditListPage from '../pages/AddEditListPage';
 import UserPage from '../pages/UserPage';
 import { authenticated as auth } from '../utils/auth';
+import { createUploadLink } from 'apollo-upload-client';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { ApolloLink } from 'apollo-link';
+import { setContext } from 'apollo-link-context';
 
 const API_URL = 'http://localhost:3000/graphql';
+const apolloCache = new InMemoryCache();
+const request = async operation => {
+  console.log(operation);
+  const token = await localStorage.getItem('token');
+  operation.setContext({
+    headers: {
+      authorization: token,
+    },
+  });
+};
+
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem('token');
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : '',
+    },
+  };
+});
+
+const uploadLink = createUploadLink({
+  uri: API_URL,
+  headers: {
+    'keep-alive': 'true',
+  },
+});
 
 const client = new ApolloClient({
-  uri: API_URL,
-  request: operation => {
-    const token = localStorage.getItem('token');
-    operation.setContext({
-      headers: {
-        authorization: token ? `Bearer ${token}` : '',
-      },
-    });
-  },
+  link: ApolloLink.from([authLink, uploadLink]),
+  cache: apolloCache,
 });
 
 function App() {

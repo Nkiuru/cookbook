@@ -165,7 +165,10 @@ export const InstructionsInput = ({ values }) => {
             <div style={{ width: '48px' }} />
             <div className={styles.subTitle}>Instructions</div>
             <Tooltip title="Add Step">
-              <IconButton onClick={() => arrayHelpers.push({ amount: '', ingredient: '' })} className={styles.addBtn}>
+              <IconButton
+                onClick={() => arrayHelpers.push({ step: values.instructions.length + 1, text: '' })}
+                className={styles.addBtn}
+              >
                 <AddIcon />
               </IconButton>
             </Tooltip>
@@ -204,7 +207,6 @@ export const InstructionsInput = ({ values }) => {
 };
 
 const getImage = file => {
-  console.log(file);
   if (!file) return;
   return URL.createObjectURL(file);
 };
@@ -237,7 +239,7 @@ export const ImageInput = ({ values }) => {
                 superClass={styles.fullWidth}
               />
               <FormControlLabel
-                control={<Field component={Switch} name="switch" type="checkbox" />}
+                control={<Field component={Switch} name={`images.${index}.primary`} type="checkbox" />}
                 label="Cover image"
               />
               <Field component={SimpleFileUpload} name={`images.${index}.file`} label="Image of the dish" />

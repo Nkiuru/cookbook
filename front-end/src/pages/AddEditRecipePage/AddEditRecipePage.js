@@ -3,7 +3,7 @@ import styles from './AddEditRecipePage.module.scss';
 import PageContainer from '../../containers/PageContainer';
 import Toolbar from '../../components/Toolbar';
 import PropTypes from 'prop-types';
-import { Field, FieldArray, Form, Formik } from 'formik';
+import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { GET_CATEGORIES } from '../../utils/queries/categories';
@@ -11,9 +11,6 @@ import { GET_TAGS } from '../../utils/queries/tags';
 import { CREATE_RECIPE, MODIFY_RECIPE } from '../../utils/mutations/recipes';
 import { useHistory, useLocation } from 'react-router';
 import TextInput from '../../components/TextInput';
-import InputLabel from '@material-ui/core/InputLabel';
-import { Select } from 'formik-material-ui';
-import MenuItem from '@material-ui/core/MenuItem';
 import Button from '../../components/Button';
 import { TagCategoryRow, IngredientEquipment, DifficultySelect, InstructionsInput, ImageInput } from './RecipeInputs';
 
@@ -32,10 +29,10 @@ const AddEditRecipePage = () => {
 const AddRecipe = () => {
   const [createRecipe] = useMutation(CREATE_RECIPE);
   const initialValues = {
-    name: '',
+    title: '',
     description: '',
     equipment: [{ amount: '', name: '' }],
-    ingredients: [{ amount: '', name: '' }],
+    ingredients: [{ amount: '', ingredient: '' }],
     instructions: [{ step: '', text: '', image: undefined }],
     images: [{ file: undefined, primary: true, altText: '' }],
     calories: undefined,
@@ -49,6 +46,7 @@ const AddRecipe = () => {
   const submit = (vars, { setSubmitting }) => {
     const variables = { variables: vars };
     console.log(vars);
+    setSubmitting(false);
     createRecipe(variables).then(r => {
       setSubmitting(false);
       window.alert('Saved');
@@ -63,7 +61,7 @@ const AddRecipe = () => {
       <div className={styles.container}>
         <Formik onSubmit={submit} initialValues={initialValues} validationSchema={validationSchema}>
           {({ isSubmitting, resetForm, values }) => (
-            <Form className={styles.col}>
+            <Form className={styles.col} encType={'multipart/form-data'}>
               <div className={styles.row}>
                 <TextInput
                   name="title"
@@ -152,7 +150,7 @@ const EditRecipe = ({ recipe }) => {
 };
 
 const validationSchema = Yup.object({
-  name: Yup.string().required('Required field'),
+  title: Yup.string().required('Required field'),
   description: Yup.string().required('Required field'),
   equipment: Yup.array().required('Required field'),
   ingredients: Yup.array().required('Required field'),

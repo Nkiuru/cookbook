@@ -13,6 +13,7 @@ const createFiles = async recipe => {
   const files = recipe.images;
   recipe.images = [];
   for await (const image of files) {
+    console.log(image);
     const upload = await processUpload(image.file);
     const file = await File.create(upload);
     image.file = file.id;
@@ -21,6 +22,7 @@ const createFiles = async recipe => {
   const instructions = recipe.instructions;
   recipe.instructions = [];
   for await (const instruction of instructions) {
+    console.log(instruction);
     const upload = await processUpload(instruction.image);
     const file = await File.create(upload);
     instruction.image = file.id;

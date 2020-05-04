@@ -16,6 +16,7 @@ const processUpload = async upload => {
   mkdir('uploads', { recursive: true }, err => {
     if (err) throw err;
   });
+  console.log(upload);
   const { createReadStream, filename, mimetype } = await upload;
   const stream = createReadStream();
   return await storeUpload({ stream, filename, mimetype });
