@@ -12,35 +12,49 @@ const getLists = async (_, { searchTerm }) => {
 
 const getMyLists = async (_, args, { user }) => {
   return List.find({ owner: user._id })
-    .populate({
-      path: 'owner tags categories recipes followers',
-      populate: [
-        {
-          path: 'images.file',
-          model: 'file',
-        },
-        {
-          path: 'author',
-        },
-      ],
-    })
+    .populate([
+      {
+        path: 'recipes',
+        model: 'recipe',
+        match: { isDeleted: false },
+        populate: [
+          {
+            path: 'images.file',
+            model: 'file',
+          },
+          {
+            path: 'author',
+          },
+        ],
+      },
+      {
+        path: 'owner tags categories followers',
+      },
+    ])
     .exec();
 };
 
 const getUsersLists = async (_, { userId }) => {
   return List.find({ owner: userId })
-    .populate({
-      path: 'owner tags categories recipes followers',
-      populate: [
-        {
-          path: 'images.file',
-          model: 'file',
-        },
-        {
-          path: 'author',
-        },
-      ],
-    })
+    .populate([
+      {
+        path: 'recipes',
+        model: 'recipe',
+        match: { isDeleted: false },
+        populate: [
+          {
+            path: 'images.file',
+            model: 'file',
+          },
+          {
+            path: 'author',
+          },
+        ],
+      },
+      {
+        path: 'owner tags categories followers',
+      },
+    ])
     .exec();
 };
 

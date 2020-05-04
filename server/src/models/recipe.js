@@ -161,7 +161,8 @@ recipeSchema.index(
 
 recipeSchema.set('toObject', { getters: true });
 recipeSchema.statics.findRecipes = function(query) {
-  return this.find(query, { isDeleted: false });
+  query.isDeleted = false;
+  return this.find(query);
 };
 
 recipeSchema.statics.findDeletedRecipes = function(query) {

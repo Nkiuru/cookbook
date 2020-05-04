@@ -10,6 +10,7 @@ import ShowChartIcon from '@material-ui/icons/ShowChart';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import Divider from '@material-ui/core/Divider';
 import PieChartIcon from '@material-ui/icons/PieChart';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import Tag from '../Tag';
 import { AccountCircle } from '@material-ui/icons';
 import moment from 'moment';
@@ -21,18 +22,20 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { GET_MY_LISTS } from '../../utils/queries/lists';
-import RecipeListCard from '../RecipeListCard';
 import { ADD_RECIPE_TO_LIST } from '../../utils/mutations/lists';
-import { ADD_RECIPE_RATING } from '../../utils/mutations/recipes';
+import { ADD_RECIPE_RATING, DELETE_RECIPE } from '../../utils/mutations/recipes';
 
 const RecipeDetailsCard = ({ recipe }) => {
   const history = useHistory();
   const [showDialog, setShowDialog] = useState(false);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [selected, setSelected] = useState('');
   const { loading: listLoading, error: listError, data: listData } = useQuery(GET_MY_LISTS);
   const [addRecipe] = useMutation(ADD_RECIPE_TO_LIST);
   const [addRating] = useMutation(ADD_RECIPE_RATING);
+  const [deleteRecipeOp] = useMutation(DELETE_RECIPE);
 
+  const user = JSON.parse(localStorage.getItem('user'));
   const primaryImage = recipe.images.find(img => {
     return img.primary;
   });
@@ -53,6 +56,14 @@ const RecipeDetailsCard = ({ recipe }) => {
     history.push({
       pathname: `/user/${recipe.author.id}`,
       state: { user: recipe.author },
+    });
+  };
+
+  const deleteRecipe = () => {
+    deleteRecipeOp({ variables: { id: recipe.id } }).then(() => {
+      window.alert('Recipe deleted');
+      setShowDialog(false);
+      history.goBack();
     });
   };
   return (
@@ -138,6 +149,14 @@ const RecipeDetailsCard = ({ recipe }) => {
             <div className={styles.infoText}>
               <div>{recipe.author.fullName}</div>
             </div>
+            <div style={{ display: 'flex' }} />
+            {recipe.author.id === user.id && (
+              <Tooltip title={'Delete Recipe'}>
+                <IconButton onClick={() => setShowDeleteDialog(true)} style={{ marginLeft: 'auto' }}>
+                  <DeleteForeverIcon color={'error'} />
+                </IconButton>
+              </Tooltip>
+            )}
           </div>
         </div>
       </div>
@@ -168,6 +187,19 @@ const RecipeDetailsCard = ({ recipe }) => {
                 </MenuItem>
               ))}
           </Select>
+        </div>
+      </Dialog>
+      <Dialog
+        header={'Delete recipe'}
+        visible={showDeleteDialog}
+        onOutsideClick={() => setShowDeleteDialog(false)}
+        positiveLabel={'Delete'}
+        negativeLabel={'Cancel'}
+        onPositiveClicked={deleteRecipe}
+        onNegativeClicked={() => setShowDeleteDialog(false)}
+      >
+        <div className={styles.container}>
+          <div>Are you sure you want to delete the recipe?</div>
         </div>
       </Dialog>
     </div>
