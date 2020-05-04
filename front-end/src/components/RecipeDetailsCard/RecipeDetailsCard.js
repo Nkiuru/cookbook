@@ -13,6 +13,7 @@ import Tag from '../Tag';
 import { AccountCircle } from '@material-ui/icons';
 import moment from 'moment';
 import { useHistory } from 'react-router-dom';
+import Category from '../Category';
 
 const RecipeDetailsCard = ({ recipe }) => {
   const history = useHistory();
@@ -34,7 +35,6 @@ const RecipeDetailsCard = ({ recipe }) => {
       state: { user: recipe.author },
     });
   };
-
   return (
     <div className={styles.card}>
       <div className={styles.imgContainer}>
@@ -90,6 +90,14 @@ const RecipeDetailsCard = ({ recipe }) => {
           {recipe.tags.map(tag => (
             <div key={tag._id} style={{ margin: '4px 4px 4px 0' }}>
               <Tag tag={tag} />
+            </div>
+          ))}
+        </div>
+        <Divider />
+        <div className={styles.row}>
+          {recipe.categories.map(cat => (
+            <div key={cat._id} style={{ margin: '4px 4px 4px 0' }}>
+              <Category category={cat} />
             </div>
           ))}
         </div>

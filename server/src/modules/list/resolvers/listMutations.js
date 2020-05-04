@@ -79,7 +79,7 @@ const addTagToList = async (_, { id, tag }, { user }) => {
     list = await List.findByIdAndUpdate(id, { $push: { tags: tag } });
     return await list.populate('owner tags categories recipes followers').execPopulate();
   } else {
-    throw new ApolloError('Tag does not exist / Unauthorized');
+    throw new ApolloError('Category does not exist / Unauthorized');
   }
 };
 

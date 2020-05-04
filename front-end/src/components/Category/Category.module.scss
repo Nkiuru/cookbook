@@ -1,0 +1,9 @@
+@import '../../vars.scss';
+
+.tag {
+  font-size: $font-small;
+  font-weight: $bold;
+  color: $text-light;
+  margin-right: 8px;
+  cursor: pointer;
+}
