@@ -51,10 +51,14 @@ const AddRecipe = () => {
   const submit = (vars, { setSubmitting }) => {
     const variables = { variables: vars };
     console.log(vars);
-    createRecipe(variables).then(() => {
-      setSubmitting(false);
-      window.alert('Saved');
-    });
+    createRecipe(variables)
+      .then(() => {
+        setSubmitting(false);
+        window.alert('Saved');
+      })
+      .catch(e => {
+        window.alert(e);
+      });
   };
   return <RecipeForm submit={submit} initialValues={initialValues} />;
 };
@@ -95,10 +99,14 @@ const EditRecipe = ({ recipe }) => {
     });
     vars.id = recipe.id;
     const variables = { variables: vars };
-    modifyRecipe(variables).then(r => {
-      setSubmitting(false);
-      window.alert('Saved');
-    });
+    modifyRecipe(variables)
+      .then(r => {
+        setSubmitting(false);
+        window.alert('Saved');
+      })
+      .catch(e => {
+        window.alert(e);
+      });
   };
 
   return <RecipeForm submit={submit} initialValues={initialValues} />;

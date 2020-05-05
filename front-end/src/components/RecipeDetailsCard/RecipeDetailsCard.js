@@ -45,16 +45,24 @@ const RecipeDetailsCard = ({ recipe }) => {
     return img.primary;
   });
   const addToList = () => {
-    addRecipe({ variables: { id: selected, recipe: recipe.id } }).then(() => {
-      window.alert('Added');
-      setShowDialog(false);
-    });
+    addRecipe({ variables: { id: selected, recipe: recipe.id } })
+      .then(() => {
+        window.alert('Added');
+        setShowDialog(false);
+      })
+      .catch(e => {
+        window.alert(e);
+      });
   };
   const rateRecipe = (event, value) => {
     console.log(value);
-    addRating({ variables: { recipe: recipe.id, score: value } }).then(() => {
-      window.alert('Rating added');
-    });
+    addRating({ variables: { recipe: recipe.id, score: value } })
+      .then(() => {
+        window.alert('Rating added');
+      })
+      .catch(e => {
+        window.alert(e);
+      });
   };
 
   const openUser = () => {
@@ -72,22 +80,30 @@ const RecipeDetailsCard = ({ recipe }) => {
   };
 
   const deleteRecipe = () => {
-    deleteRecipeOp({ variables: { id: recipe.id } }).then(() => {
-      window.alert('Recipe deleted');
-      setShowDeleteDialog(false);
-      history.goBack();
-    });
+    deleteRecipeOp({ variables: { id: recipe.id } })
+      .then(() => {
+        window.alert('Recipe deleted');
+        setShowDeleteDialog(false);
+        history.goBack();
+      })
+      .catch(e => {
+        window.alert(e);
+      });
   };
 
   const cloneRecipeHandler = () => {
-    cloneRecipe({ variables: { id: recipe.id } }).then(({ data }) => {
-      window.alert('Cloned!');
-      const id = data.cloneRecipe.id;
-      history.push({
-        pathname: `/recipe/${id}/edit`,
-        state: { recipe: { id } },
+    cloneRecipe({ variables: { id: recipe.id } })
+      .then(({ data }) => {
+        window.alert('Cloned!');
+        const id = data.cloneRecipe.id;
+        history.push({
+          pathname: `/recipe/${id}/edit`,
+          state: { recipe: { id } },
+        });
+      })
+      .catch(e => {
+        window.alert(e);
       });
-    });
   };
   return (
     <div className={styles.card}>

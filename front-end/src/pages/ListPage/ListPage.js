@@ -36,7 +36,9 @@ const ListPage = () => {
       window.alert(data.deleteList);
       setShowDeleteDialog(false);
       history.goBack();
-    });
+    }).catch(e => {
+      window.alert(e);
+    });;
   };
   return (
     <PageContainer>

@@ -47,12 +47,16 @@ const RecipeDetailPage = () => {
       });
   };
   const handleDeleteReview = id => {
-    deleteReview({ variables: { id } }).then(() => {
-      data.getRecipe.reviews = data.getRecipe.reviews.filter(r => r.id !== id);
-      console.log(data.getRecipe.reviews);
-      setShowDialog(false);
-      window.alert('Deleted');
-    });
+    deleteReview({ variables: { id } })
+      .then(() => {
+        data.getRecipe.reviews = data.getRecipe.reviews.filter(r => r.id !== id);
+        console.log(data.getRecipe.reviews);
+        setShowDialog(false);
+        window.alert('Deleted');
+      })
+      .catch(e => {
+        window.alert(e);
+      });
   };
   const openUser = () => {
     history.push({

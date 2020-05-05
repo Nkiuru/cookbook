@@ -33,7 +33,9 @@ const ProfilePage = () => {
       localStorage.setItem('user', JSON.stringify(u));
       setSubmitting(false);
       window.alert('Saved');
-    });
+    }).catch(e => {
+      window.alert(e);
+    });;
   };
 
   const logout = () => {

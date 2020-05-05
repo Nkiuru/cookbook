@@ -40,14 +40,22 @@ const HomePage = () => {
     setShowLoginDialog(false);
   };
   const loginHandler = ({ email, password }) => {
-    login({ variables: { email, password } }).then(saveCredentials);
+    login({ variables: { email, password } })
+      .then(saveCredentials)
+      .catch(e => {
+        window.alert(e);
+      });
   };
   const signupHandler = ({ email, firstName, lastName, password }) => {
-    signup({ variables: { email, password, firstName, lastName } }).then(() => {
-      window.alert('Account created');
-      setShowDialog(false);
-      setShowLoginDialog(true);
-    });
+    signup({ variables: { email, password, firstName, lastName } })
+      .then(() => {
+        window.alert('Account created');
+        setShowDialog(false);
+        setShowLoginDialog(true);
+      })
+      .catch(e => {
+        window.alert(e);
+      });
   };
   return (
     <PageContainer>
