@@ -2,7 +2,7 @@
   "name": "cookbook",
   "version": "1.0.0",
   "description": "GraphQL API for storing & sharing recipes and meal plans",
-  "main": "index.js",
+  "main": "server.js",
   "dependencies": {
     "apollo-server-express": "^2.11.0",
     "bcrypt": "^4.0.1",
@@ -33,8 +33,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node -r dotenv/config index.js",
-    "dev": "nodemon index.js --exec \\\"node -r dotenv/config\\\""
+    "start": "node -r dotenv/config server.js",
+    "dev": "nodemon server.js --exec \\\\\\\"node -r dotenv/config\\\\\\\""
   },
   "repository": {
     "type": "git",
