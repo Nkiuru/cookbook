@@ -11,17 +11,12 @@ const signup = async (_, { email, password, firstName, lastName }) => {
   }
   const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
 
-  const user = await User.create({
+  return await User.create({
     email,
     password: hashedPassword,
     firstName,
     lastName,
   });
-
-  return {
-    ...user._doc,
-    id: user.id,
-  };
 };
 
 module.exports = signup;

@@ -69,7 +69,7 @@ typings/
 .yarn-integrity
 
 # dotenv environment variables file
-.env
+server/.env
 .env.test
 
 # parcel-bundler cache (https://parceljs.org/)
@@ -104,8 +104,8 @@ dist
 .tern-port
 
 # HTTPS certs
-ssl-key.pem
-ssl-cert.pem
+server/ssl-key.pem
+server/ssl-cert.pem
 
 .idea/
 
