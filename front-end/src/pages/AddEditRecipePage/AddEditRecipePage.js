@@ -51,7 +51,55 @@ const AddRecipe = () => {
       window.alert('Saved');
     });
   };
+  return <RecipeForm submit={submit} initialValues={initialValues} />;
+};
 
+const EditRecipe = ({ recipe }) => {
+  const [modifyRecipe] = useMutation(MODIFY_RECIPE);
+  const initialValues = {
+    title: recipe.title,
+    description: recipe.description,
+    equipment: recipe.equipment,
+    ingredients: recipe.ingredients,
+    instructions: recipe.instructions,
+    images: recipe.images,
+    calories: recipe.calories,
+    cookingTime: recipe.cookingTime,
+    difficulty: recipe.difficulty,
+    portions: recipe.portions,
+    notes: recipe.notes,
+    tags: recipe.tags.map(t => {
+      return t._id;
+    }),
+    categories: recipe.categories.map(t => {
+      return t._id;
+    }),
+  };
+  const submit = (vars, { setSubmitting }) => {
+    vars.equipment.forEach(e => {
+      delete e.__typename;
+    });
+    vars.instructions.forEach(e => {
+      delete e.__typename;
+    });
+    vars.images.forEach(e => {
+      delete e.__typename;
+    });
+    vars.ingredients.forEach(e => {
+      delete e.__typename;
+    });
+    vars.id = recipe.id;
+    const variables = { variables: vars };
+    modifyRecipe(variables).then(r => {
+      setSubmitting(false);
+      window.alert('Saved');
+    });
+  };
+
+  return <RecipeForm submit={submit} initialValues={initialValues} />;
+};
+
+const RecipeForm = ({ submit, initialValues }) => {
   return (
     <>
       <div className={styles.header}>
@@ -137,17 +185,6 @@ const AddRecipe = () => {
   );
 };
 
-const EditRecipe = ({ recipe }) => {
-  const [modifyRecipe] = useMutation(MODIFY_RECIPE);
-  const { loading: catLoading, error: catError, data: categories } = useQuery(GET_CATEGORIES);
-  const { loading: tagLoading, error: tagError, data: tags } = useQuery(GET_TAGS);
-  return (
-    <div className={styles.header}>
-      <div className={styles.title}>Modify {recipe.name}</div>
-    </div>
-  );
-};
-
 const validationSchema = Yup.object({
   title: Yup.string().required('Required field'),
   description: Yup.string().required('Required field'),
@@ -164,6 +201,11 @@ const validationSchema = Yup.object({
 
 EditRecipe.propTypes = {
   recipe: PropTypes.object,
+};
+
+RecipeForm.propTypes = {
+  initialValues: PropTypes.array,
+  submit: PropTypes.func,
 };
 
 export default AddEditRecipePage;

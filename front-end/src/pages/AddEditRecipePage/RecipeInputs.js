@@ -208,6 +208,7 @@ export const InstructionsInput = ({ values }) => {
 
 const getImage = file => {
   if (!file) return;
+  if (file._id) return `http://localhost:3000/${file.path}`;
   return URL.createObjectURL(file);
 };
 

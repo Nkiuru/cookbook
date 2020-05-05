@@ -11,6 +11,7 @@ import BarChartIcon from '@material-ui/icons/BarChart';
 import Divider from '@material-ui/core/Divider';
 import PieChartIcon from '@material-ui/icons/PieChart';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import EditIcon from '@material-ui/icons/Edit';
 import Tag from '../Tag';
 import { AccountCircle } from '@material-ui/icons';
 import moment from 'moment';
@@ -59,6 +60,13 @@ const RecipeDetailsCard = ({ recipe }) => {
     });
   };
 
+  const openRecipeEdit = () => {
+    history.push({
+      pathname: `/recipe/${recipe.id}/edit`,
+      state: { recipe },
+    });
+  };
+
   const deleteRecipe = () => {
     deleteRecipeOp({ variables: { id: recipe.id } }).then(() => {
       window.alert('Recipe deleted');
@@ -79,6 +87,13 @@ const RecipeDetailsCard = ({ recipe }) => {
       <div className={styles.infoContainer}>
         <div className={styles.titleContainer}>
           <div className={styles.title}>{recipe.title}</div>
+          {recipe.author.id === user.id && (
+            <Tooltip title={'Edit recipe'}>
+              <IconButton onClick={openRecipeEdit} style={{ marginLeft: 'auto' }}>
+                <EditIcon />
+              </IconButton>
+            </Tooltip>
+          )}
           <Tooltip title={'Add to list'}>
             <IconButton onClick={() => setShowDialog(true)}>
               <AddIcon />
