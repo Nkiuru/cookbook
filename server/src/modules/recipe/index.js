@@ -77,7 +77,7 @@ const typeDefs = gql`
   }
 
   type Equipment {
-    amount: Float!
+    amount: String!
     name: String!
   }
 

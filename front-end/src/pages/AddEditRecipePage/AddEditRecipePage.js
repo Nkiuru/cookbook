@@ -33,7 +33,7 @@ const AddRecipe = () => {
     description: '',
     equipment: [{ amount: '', name: '' }],
     ingredients: [{ amount: '', ingredient: '' }],
-    instructions: [{ step: '', text: '', image: undefined }],
+    instructions: [{ step: 1, text: '', image: undefined }],
     images: [{ file: undefined, primary: true, altText: '' }],
     calories: undefined,
     cookingTime: '',
@@ -46,7 +46,6 @@ const AddRecipe = () => {
   const submit = (vars, { setSubmitting }) => {
     const variables = { variables: vars };
     console.log(vars);
-    setSubmitting(false);
     createRecipe(variables).then(r => {
       setSubmitting(false);
       window.alert('Saved');
@@ -158,7 +157,7 @@ const validationSchema = Yup.object({
   calories: Yup.number().required('Required field'),
   cookingTime: Yup.string().required('Required field'),
   difficulty: Yup.string().required('Required field'),
-  notes: Yup.string().required('Required field'),
+  notes: Yup.string(),
   tags: Yup.array(),
   categories: Yup.array(),
 });
