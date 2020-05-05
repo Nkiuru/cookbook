@@ -21,13 +21,9 @@ const startServer = async () => {
     let options = {};
     if (config.NODE_ENV === 'development') {
       app.listen(config.PORT);
-      options = {
-        key: fs.readFileSync(config.SSL_KEY),
-        cert: fs.readFileSync(config.SSL_CERT),
-      };
     }
 
-    https.createServer(options, app).listen(config.PORT);
+    https.createServer(options, app).listen(8000);
     console.log(`Server started on port: ${config.PORT}, connected to mongo at ${mongoHost}`);
   } catch (error) {
     console.error('App could not be started:', error);

@@ -32,16 +32,12 @@ app.use((req, res, next) => {
   }
 });
 
-const corsOptions = {
-  origin: ['http://localhost:3001', 'https://env-6758651.jelastic.metropolia.fi'],
-  credentials: true,
-};
-app.use(cors(corsOptions));
+app.use(cors());
 
 server.applyMiddleware({
   path: '/graphql',
   app,
 });
-app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+app.use('/uploads', express.static(path.join(__dirname, './uploads')));
 
 module.exports = app;
