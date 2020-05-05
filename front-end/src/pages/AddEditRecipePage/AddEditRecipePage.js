@@ -57,6 +57,7 @@ const AddRecipe = () => {
         window.alert('Saved');
       })
       .catch(e => {
+        setSubmitting(false);
         window.alert(e);
       });
   };
@@ -105,6 +106,7 @@ const EditRecipe = ({ recipe }) => {
         window.alert('Saved');
       })
       .catch(e => {
+        setSubmitting(false);
         window.alert(e);
       });
   };

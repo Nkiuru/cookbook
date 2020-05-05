@@ -25,7 +25,7 @@ const createFiles = async recipe => {
   const instructions = recipe.instructions;
   recipe.instructions = [];
   for await (const instruction of instructions) {
-    if (!instruction.image._id) {
+    if (instruction.image && !instruction.image._id) {
       const upload = await processUpload(instruction.image);
       const file = await File.create(upload);
       instruction.image = file.id;
