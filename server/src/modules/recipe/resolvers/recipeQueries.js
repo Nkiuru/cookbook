@@ -2,6 +2,7 @@ const Recipe = require('../../../models/recipe');
 
 const populateRecipe = async (recipe, skip, limit) => {
   return Recipe.populateRecipe(recipe)
+    .sort({ changed: -1 })
     .skip(skip)
     .limit(limit);
 };

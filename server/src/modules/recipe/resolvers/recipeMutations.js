@@ -60,6 +60,7 @@ const modifyRecipe = async (_, args, { user }) => {
     newRecipe = await createFiles(args);
   }
   recipe = Object.assign(recipe, newRecipe);
+  recipe.changed = Date.now();
   await recipe.save();
   console.log(recipe);
   return await populateRecipe(recipe);
@@ -81,8 +82,9 @@ const cloneRecipe = async (_, { id }, { user }) => {
     throw new ApolloError('Recipe does not exist');
   }
   recipe._doc._id = mongoose.Types.ObjectId();
+  recipe.title = `Clone of ${recipe.title}`;
   recipe.author = user.id;
-  recipe.updatedAt = Date.now();
+  recipe.changed = Date.now();
   recipe.isNew = true;
   recipe.save();
   return populateRecipe(recipe);
