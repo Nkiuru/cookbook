@@ -27,7 +27,7 @@ const startServer = async () => {
       };
     }
 
-    https.createServer(options, app).listen(8000);
+    https.createServer(options, app).listen(config.PORT);
     console.log(`Server started on port: ${config.PORT}, connected to mongo at ${mongoHost}`);
   } catch (error) {
     console.error('App could not be started:', error);
