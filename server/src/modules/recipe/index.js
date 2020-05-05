@@ -49,6 +49,7 @@ const typeDefs = gql`
     categories: [Category]
     lists: [List]
     rating: Float
+    isDeleted: Boolean
   }
 
   type File {

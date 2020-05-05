@@ -71,7 +71,7 @@ const ProfilePage = () => {
                 <p>Sending</p>
               ) : (
                 <div className={styles.row}>
-                  <Button type="button" label="Cancel" secondary onClick={resetForm} style={{ marginTop: '16px' }} />
+                  <Button type="button" label="Reset" secondary onClick={resetForm} style={{ marginTop: '16px' }} />
                   <Button type="submit" label="Save" primary filled style={{ marginTop: '16px' }} />
                 </div>
               )}

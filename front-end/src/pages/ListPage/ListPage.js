@@ -92,7 +92,7 @@ const ListPage = () => {
         <Divider />
       </div>
       <Dialog
-        header={'Delete recipe'}
+        header={'Delete list'}
         visible={showDeleteDialog}
         onOutsideClick={() => setShowDeleteDialog(false)}
         positiveLabel={'Delete'}

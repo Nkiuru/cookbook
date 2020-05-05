@@ -77,6 +77,7 @@ export const GET_RECIPE = gql`
         }
       }
       rating
+      isDeleted
     }
   }
 `;
@@ -180,6 +181,7 @@ export const GET_RECIPES = gql`
         }
       }
       rating
+      isDeleted
     }
   }
 `;

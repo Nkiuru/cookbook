@@ -3,7 +3,6 @@ const Recipe = require('../../../models/recipe');
 const Tag = require('../../../models/tag');
 const Category = require('../../../models/category');
 const { ApolloError } = require('apollo-server-express');
-
 const createList = async (_, args, { user }) => {
   args.owner = user.id;
   let list = await List.create(args);
@@ -27,6 +26,13 @@ const modifyList = async (_, args, { user }) => {
   }
   if (l.owner.toString() !== user._id.toString()) {
     throw new ApolloError('Unauthorized');
+  }
+  for await (const recipe of l.recipes) {
+    if (args.recipes && !args.recipes.find(r => r === recipe)) {
+      await Recipe.findByIdAndUpdate(recipe, {
+        $pull: { lists: l.id },
+      });
+    }
   }
   const list = await List.findByIdAndUpdate(args.id, args, { new: true });
   if (args.recipes) {

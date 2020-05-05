@@ -25,6 +25,9 @@ const getMyLists = async (_, args, { user }) => {
           {
             path: 'author',
           },
+          {
+            path: 'tags',
+          },
         ],
       },
       {
@@ -48,6 +51,9 @@ const getUsersLists = async (_, { userId }) => {
           },
           {
             path: 'author',
+          },
+          {
+            path: 'tags',
           },
         ],
       },

@@ -177,7 +177,7 @@ const RecipeForm = ({ submit, initialValues }) => {
                 <div className={styles.row} style={{ justifyContent: 'space-between' }}>
                   <Button
                     type="button"
-                    label="Cancel"
+                    label="Reset"
                     secondary
                     onClick={resetForm}
                     style={{ marginTop: '16px', width: '128px' }}

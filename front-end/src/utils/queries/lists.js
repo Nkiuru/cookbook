@@ -31,6 +31,10 @@ export const GET_MY_LISTS = gql`
           altText
           primary
         }
+        tags {
+          _id
+          name
+        }
       }
     }
   }
@@ -66,6 +70,10 @@ export const GET_USERS_LISTS = gql`
           }
           altText
           primary
+        }
+        tags {
+          _id
+          name
         }
       }
     }

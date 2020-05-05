@@ -162,6 +162,7 @@ recipeSchema.index(
 recipeSchema.set('toObject', { getters: true });
 recipeSchema.statics.findRecipes = function(query) {
   query.isDeleted = false;
+  console.log(query);
   return this.find(query);
 };
 
