@@ -1,1 +1,1 @@
-export const API_URL = 'https://env-6758651.jelastic.metropolia.fi:8000/';
+export const API_URL = 'https://env-9391764.jelastic.metropolia.fi/';
