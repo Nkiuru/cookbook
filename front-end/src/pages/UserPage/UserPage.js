@@ -2,14 +2,13 @@ import React, { useState } from 'react';
 import styles from './UserPage.module.scss';
 import PageContainer from '../../containers/PageContainer';
 import Toolbar from '../../components/Toolbar';
-import Button from '../../components/Button';
 import RecipeCard from '../../components/RecipeCard';
 import Divider from '@material-ui/core/Divider';
 import { useQuery } from '@apollo/react-hooks';
 import { GET_RECIPES } from '../../utils/queries/recipes';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import IconButton from '@material-ui/core/IconButton';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { GET_USERS_LISTS } from '../../utils/queries/lists';
 import RecipeListCard from '../../components/RecipeListCard';
 

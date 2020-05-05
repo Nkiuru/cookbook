@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import styles from './HomePage.module.scss';
-import { useQuery, useMutation } from '@apollo/react-hooks';
-import { GET_ME } from '../../utils/queries/users';
+import { useMutation } from '@apollo/react-hooks';
 import { LOGIN, SIGNGUP } from '../../utils/mutations/auth';
 import PageContainer from '../../containers/PageContainer';
 import Button from '../../components/Button';
@@ -14,13 +13,12 @@ const HomePage = () => {
   const history = useHistory();
   const [showLoginDialog, setShowLoginDialog] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
-  const { loading, error, data } = useQuery(GET_ME);
   const [login] = useMutation(LOGIN);
   const [signup] = useMutation(SIGNGUP);
   const classes = [styles.page];
   (showDialog || showLoginDialog) && classes.push(styles.blurred);
   const handleUserKeyPress = useCallback(event => {
-    const { key, keyCode } = event;
+    const { keyCode } = event;
 
     if (keyCode === 27) {
       setShowDialog(false);
@@ -51,8 +49,6 @@ const HomePage = () => {
       setShowLoginDialog(true);
     });
   };
-  if (loading) return <p>Loading...</p>;
-
   return (
     <PageContainer>
       <div className={classes.join(' ')}>

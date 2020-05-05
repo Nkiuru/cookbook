@@ -1,24 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './AddEditListPage.module.scss';
 import PageContainer from '../../containers/PageContainer';
 import Toolbar from '../../components/Toolbar';
-import { useHistory, useLocation } from 'react-router';
+import { useLocation } from 'react-router';
 import PropTypes from 'prop-types';
 import { FieldArray, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import TextInput from '../../components/TextInput';
 import Button from '../../components/Button';
-import { useMutation, useQuery } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/react-hooks';
 import { CREATE_LIST, MODIFY_LIST } from '../../utils/mutations/lists';
 import { TagCategoryRow } from '../AddEditRecipePage/RecipeInputs';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
-import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import RecipeSearchItem from '../../components/RecipeSearchItem';
 
 const AddEditListPage = () => {
-  const history = useHistory();
   const location = useLocation();
   const list = location.state;
   return (

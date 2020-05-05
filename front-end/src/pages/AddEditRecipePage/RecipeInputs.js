@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import styles from './AddEditRecipePage.module.scss';
-import { Field, FieldArray, Form } from 'formik';
+import { Field, FieldArray } from 'formik';
 import TextInput from '../../components/TextInput';
 import IconButton from '@material-ui/core/IconButton';
 import RemoveIcon from '@material-ui/icons/Remove';
@@ -196,7 +196,7 @@ export const InstructionsInput = ({ values }) => {
                 </IconButton>
               </div>
               <div className={styles.imgContainer}>
-                {i.image && <img className={styles.img} src={getImage(i.image)} alt="uploaded image" />}
+                {i.image && <img className={styles.img} src={getImage(i.image)} alt="uploaded" />}
               </div>
             </div>
           ))}

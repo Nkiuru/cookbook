@@ -6,17 +6,14 @@ import PropTypes from 'prop-types';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import { useMutation, useQuery } from '@apollo/react-hooks';
-import { GET_CATEGORIES } from '../../utils/queries/categories';
-import { GET_TAGS } from '../../utils/queries/tags';
 import { CREATE_RECIPE, MODIFY_RECIPE } from '../../utils/mutations/recipes';
-import { useHistory, useLocation } from 'react-router';
+import { useLocation } from 'react-router';
 import TextInput from '../../components/TextInput';
 import Button from '../../components/Button';
 import { TagCategoryRow, IngredientEquipment, DifficultySelect, InstructionsInput, ImageInput } from './RecipeInputs';
 import { GET_RECIPE } from '../../utils/queries/recipes';
 
 const AddEditRecipePage = () => {
-  const history = useHistory();
   const location = useLocation();
   const r = location.state;
   const doSkip = r === undefined;
@@ -25,7 +22,7 @@ const AddEditRecipePage = () => {
     id = r.recipe.id;
   }
   console.log(r);
-  const { loading, error, data } = useQuery(GET_RECIPE, { variables: { id }, skip: doSkip });
+  const { loading, data } = useQuery(GET_RECIPE, { variables: { id }, skip: doSkip });
   return (
     <PageContainer>
       <Toolbar />
@@ -54,7 +51,7 @@ const AddRecipe = () => {
   const submit = (vars, { setSubmitting }) => {
     const variables = { variables: vars };
     console.log(vars);
-    createRecipe(variables).then(r => {
+    createRecipe(variables).then(() => {
       setSubmitting(false);
       window.alert('Saved');
     });

@@ -31,7 +31,7 @@ const RecipeDetailPage = () => {
   const [createReview] = useMutation(CREATE_REVIEW);
   //const [modifyReview] = useMutation(MODIFY_REVIEW);
   const [deleteReview] = useMutation(DELETE_REVIEW);
-  const { loading, error, data } = useQuery(GET_RECIPE, { variables: { id: r.id } });
+  const { loading, data } = useQuery(GET_RECIPE, { variables: { id: r.id } });
   const user = JSON.parse(localStorage.getItem('user'));
 
   const handleCreateReview = () => {
@@ -46,7 +46,7 @@ const RecipeDetailPage = () => {
       });
   };
   const handleDeleteReview = id => {
-    deleteReview({ variables: { id } }).then(e => {
+    deleteReview({ variables: { id } }).then(() => {
       data.getRecipe.reviews = data.getRecipe.reviews.filter(r => r.id !== id);
       console.log(data.getRecipe.reviews);
       setShowDialog(false);
