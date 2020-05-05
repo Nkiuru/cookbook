@@ -5,6 +5,7 @@ import { KeyboardArrowRight } from '@material-ui/icons';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Tag from '../Tag';
+import { API_URL } from '../../utils/constants';
 
 const RecipeSearchItem = ({ recipe }) => {
   const history = useHistory();
@@ -24,7 +25,7 @@ const RecipeSearchItem = ({ recipe }) => {
       <div>
         <img
           className={styles.img}
-          src={`http://localhost:3000/${primaryImage.file.path}`}
+          src={`${API_URL}${primaryImage.file.path}`}
           alt={primaryImage.altText}
           onClick={openRecipe}
         />

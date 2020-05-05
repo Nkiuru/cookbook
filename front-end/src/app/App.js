@@ -18,8 +18,8 @@ import { createUploadLink } from 'apollo-upload-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloLink } from 'apollo-link';
 import { setContext } from 'apollo-link-context';
+import { API_URL } from '../utils/constants';
 
-const API_URL = 'http://localhost:3000/graphql';
 const apolloCache = new InMemoryCache();
 
 const authLink = setContext((_, { headers }) => {
@@ -33,7 +33,7 @@ const authLink = setContext((_, { headers }) => {
 });
 
 const uploadLink = createUploadLink({
-  uri: API_URL,
+  uri: `${API_URL}graphql`,
   headers: {
     'keep-alive': 'true',
   },

@@ -16,6 +16,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Divider from '@material-ui/core/Divider';
 import Tooltip from '@material-ui/core/Tooltip';
 import { Carousel } from 'react-responsive-carousel';
+import { API_URL } from '../../utils/constants';
 
 export const DifficultySelect = () => {
   return (
@@ -208,7 +209,7 @@ export const InstructionsInput = ({ values }) => {
 
 const getImage = file => {
   if (!file) return;
-  if (file._id) return `http://localhost:3000/${file.path}`;
+  if (file._id) return `${API_URL}${file.path}`;
   return URL.createObjectURL(file);
 };
 

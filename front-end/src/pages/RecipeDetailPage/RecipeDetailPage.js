@@ -21,6 +21,7 @@ import { useHistory } from 'react-router-dom';
 import Tooltip from '@material-ui/core/Tooltip';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import { GET_RECIPE } from '../../utils/queries/recipes';
+import { API_URL } from '../../utils/constants';
 
 const RecipeDetailPage = () => {
   const location = useLocation();
@@ -84,7 +85,7 @@ const RecipeDetailPage = () => {
             <Carousel className={styles.carousel}>
               {data.getRecipe.images.map(img => (
                 <div key={img.file._id}>
-                  <img src={`http://localhost:3000/${img.file.path}`} alt={img.altText} />
+                  <img src={`${API_URL}${img.file.path}`} alt={img.altText} />
                   <p className="legend">{img.altText}</p>
                 </div>
               ))}

@@ -6,6 +6,7 @@ import IconButton from '@material-ui/core/IconButton';
 import { useHistory } from 'react-router-dom';
 import Tooltip from '@material-ui/core/Tooltip';
 import Tag from '../Tag';
+import { API_URL } from '../../utils/constants';
 
 const RecipeCard = ({ recipe }) => {
   const history = useHistory();
@@ -50,7 +51,7 @@ const RecipeCard = ({ recipe }) => {
         <figure className={styles.imgContainer}>
           <img
             className={styles.image}
-            src={`http://localhost:3000/${primaryImage.file.path}`}
+            src={`${API_URL}${primaryImage.file.path}`}
             alt={primaryImage.altText}
             onClick={openRecipe}
           />

@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './Instruction.module.scss';
 import PropTypes from 'prop-types';
+import { API_URL } from '../../utils/constants';
 
 const Instruction = ({ instruction }) => {
   return (
@@ -15,7 +16,7 @@ const Instruction = ({ instruction }) => {
         {instruction.image && (
           <img
             className={styles.img}
-            src={`http://localhost:3000/${instruction.image.path}`}
+            src={`${API_URL}${instruction.image.path}`}
             alt={instruction.image.altText}
           />
         )}

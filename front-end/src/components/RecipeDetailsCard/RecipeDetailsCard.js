@@ -27,6 +27,7 @@ import { GET_MY_LISTS } from '../../utils/queries/lists';
 import { ADD_RECIPE_TO_LIST } from '../../utils/mutations/lists';
 import { ADD_RECIPE_RATING, DELETE_RECIPE } from '../../utils/mutations/recipes';
 import { CLONE_RECIPE } from '../../utils/queries/recipes';
+import { API_URL } from '../../utils/constants';
 
 const RecipeDetailsCard = ({ recipe }) => {
   const history = useHistory();
@@ -91,11 +92,7 @@ const RecipeDetailsCard = ({ recipe }) => {
   return (
     <div className={styles.card}>
       <div className={styles.imgContainer}>
-        <img
-          className={styles.img}
-          src={`http://localhost:3000/${primaryImage.file.path}`}
-          alt={primaryImage.altText}
-        />
+        <img className={styles.img} src={`${API_URL}${primaryImage.file.path}`} alt={primaryImage.altText} />
       </div>
       <Divider orientation="vertical" flexItem />
       <div className={styles.infoContainer}>
