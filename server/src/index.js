@@ -18,13 +18,15 @@ const startServer = async () => {
   };
   try {
     await Promise.all([mongoose.connect(config.DB_URL, mongooseOptions)]);
+    let options = {};
     if (config.NODE_ENV === 'development') {
       app.listen(config.PORT);
+      options = {
+        key: fs.readFileSync(config.SSL_KEY),
+        cert: fs.readFileSync(config.SSL_CERT),
+      };
     }
-    const options = {
-      key: fs.readFileSync(config.SSL_KEY),
-      cert: fs.readFileSync(config.SSL_CERT),
-    };
+
     https.createServer(options, app).listen(8000);
     console.log(`Server started on port: ${config.PORT}, connected to mongo at ${mongoHost}`);
   } catch (error) {
