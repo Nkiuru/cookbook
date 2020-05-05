@@ -12,6 +12,7 @@ import Divider from '@material-ui/core/Divider';
 import PieChartIcon from '@material-ui/icons/PieChart';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import EditIcon from '@material-ui/icons/Edit';
+import FileCopyIcon from '@material-ui/icons/FileCopy';
 import Tag from '../Tag';
 import { AccountCircle } from '@material-ui/icons';
 import moment from 'moment';
@@ -25,6 +26,7 @@ import { useMutation, useQuery } from '@apollo/react-hooks';
 import { GET_MY_LISTS } from '../../utils/queries/lists';
 import { ADD_RECIPE_TO_LIST } from '../../utils/mutations/lists';
 import { ADD_RECIPE_RATING, DELETE_RECIPE } from '../../utils/mutations/recipes';
+import { CLONE_RECIPE } from '../../utils/queries/recipes';
 
 const RecipeDetailsCard = ({ recipe }) => {
   const history = useHistory();
@@ -35,6 +37,7 @@ const RecipeDetailsCard = ({ recipe }) => {
   const [addRecipe] = useMutation(ADD_RECIPE_TO_LIST);
   const [addRating] = useMutation(ADD_RECIPE_RATING);
   const [deleteRecipeOp] = useMutation(DELETE_RECIPE);
+  const [cloneRecipe] = useMutation(CLONE_RECIPE);
 
   const user = JSON.parse(localStorage.getItem('user'));
   const primaryImage = recipe.images.find(img => {
@@ -74,6 +77,17 @@ const RecipeDetailsCard = ({ recipe }) => {
       history.goBack();
     });
   };
+
+  const cloneRecipeHandler = () => {
+    cloneRecipe({ variables: { id: recipe.id } }).then(({ data }) => {
+      window.alert('Cloned!');
+      const id = data.cloneRecipe.id;
+      history.push({
+        pathname: `/recipe/${id}/edit`,
+        state: { recipe: { id } },
+      });
+    });
+  };
   return (
     <div className={styles.card}>
       <div className={styles.imgContainer}>
@@ -109,6 +123,11 @@ const RecipeDetailsCard = ({ recipe }) => {
             style={{ marginRight: '8px' }}
           />
           <div className={styles.smallText}>{recipe.ratings.length} ratings</div>
+          <Tooltip title={'Clone recipe'}>
+            <IconButton onClick={cloneRecipeHandler} style={{ marginLeft: 'auto' }}>
+              <FileCopyIcon />
+            </IconButton>
+          </Tooltip>
         </div>
         <div className={styles.row}>
           <ScheduleIcon className={styles.icon} />

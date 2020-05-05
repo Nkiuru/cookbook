@@ -7,7 +7,7 @@ const populateRecipe = async (recipe, skip, limit) => {
 };
 
 const getRecipe = async (_, args) => {
-  return Recipe.findById(args.id);
+  return populateRecipe(Recipe.findById(args.id));
 };
 
 const getRecipes = async (_, args) => {

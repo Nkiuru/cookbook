@@ -70,6 +70,13 @@ export const GET_RECIPE = gql`
         id
         name
       }
+      ratings {
+        score
+        user {
+          id
+        }
+      }
+      rating
     }
   }
 `;
@@ -173,6 +180,14 @@ export const GET_RECIPES = gql`
         }
       }
       rating
+    }
+  }
+`;
+
+export const CLONE_RECIPE = gql`
+  mutation cloneRecipe($id: ID!) {
+    cloneRecipe(id: $id) {
+      id
     }
   }
 `;

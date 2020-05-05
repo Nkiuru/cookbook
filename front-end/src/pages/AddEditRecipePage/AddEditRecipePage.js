@@ -13,15 +13,23 @@ import { useHistory, useLocation } from 'react-router';
 import TextInput from '../../components/TextInput';
 import Button from '../../components/Button';
 import { TagCategoryRow, IngredientEquipment, DifficultySelect, InstructionsInput, ImageInput } from './RecipeInputs';
+import { GET_RECIPE } from '../../utils/queries/recipes';
 
 const AddEditRecipePage = () => {
   const history = useHistory();
   const location = useLocation();
-  const recipe = location.state;
+  const r = location.state;
+  const doSkip = r === undefined;
+  let id = 0;
+  if (!doSkip) {
+    id = r.recipe.id;
+  }
+  console.log(r);
+  const { loading, error, data } = useQuery(GET_RECIPE, { variables: { id }, skip: doSkip });
   return (
     <PageContainer>
       <Toolbar />
-      {recipe ? <EditRecipe recipe={recipe.recipe} /> : <AddRecipe />}
+      {!loading && data ? <EditRecipe recipe={data.getRecipe} /> : <AddRecipe />}
     </PageContainer>
   );
 };
