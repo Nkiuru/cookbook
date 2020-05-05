@@ -17,7 +17,7 @@ export const MODIFY_LIST = gql`
 `;
 
 export const DELETE_LIST = gql`
-  mutation deleteist($id: ID!) {
+  mutation deleteList($id: ID!) {
     deleteList(id: $id)
   }
 `;

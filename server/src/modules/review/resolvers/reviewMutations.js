@@ -7,6 +7,15 @@ const createReview = async (_, args, { user }) => {
   args.user = user.id;
   const r = await Recipe.findById(args.recipe);
   if (r) {
+    console.log(r.reviews);
+    if (
+      r.reviews.find(async review => {
+        const re = await Review.findById(review);
+        return re.user.toString() === user._id.toString();
+      })
+    ) {
+      throw new ApolloError('Cannot review it again');
+    }
     const review = await Review.create(args);
     r.reviews.push(review._id);
     await r.save();

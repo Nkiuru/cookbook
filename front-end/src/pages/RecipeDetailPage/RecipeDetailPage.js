@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './RecipeDetailPage.module.scss';
 import PageContainer from '../../containers/PageContainer';
 import Toolbar from '../../components/Toolbar';
@@ -13,13 +13,50 @@ import moment from 'moment';
 import Divider from '@material-ui/core/Divider';
 import RecipeDetailsCard from '../../components/RecipeDetailsCard';
 import IngredientsCard from '../../components/IngredientsCard';
+import { useMutation } from '@apollo/react-hooks';
+import { CREATE_REVIEW, DELETE_REVIEW } from '../../utils/mutations/reviews';
+import Dialog from '../../components/Dialog';
+import { TextField as TextInput } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
+import Tooltip from '@material-ui/core/Tooltip';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 const RecipeDetailPage = () => {
   const location = useLocation();
+  const history = useHistory();
   const recipe = location.state.recipe;
+  const [showDialog, setShowDialog] = useState(false);
+  const [review, setReview] = useState('');
+  const [createReview] = useMutation(CREATE_REVIEW);
+  //const [modifyReview] = useMutation(MODIFY_REVIEW);
+  const [deleteReview] = useMutation(DELETE_REVIEW);
+  const user = JSON.parse(localStorage.getItem('user'));
 
-  const addReview = () => {};
-  const openUser = () => {};
+  const handleCreateReview = () => {
+    createReview({ variables: { recipe: recipe.id, content: review } })
+      .then(e => {
+        recipe.reviews.push(e.data.createReview);
+        setShowDialog(false);
+        window.alert('Created');
+      })
+      .catch(error => {
+        window.alert(error);
+      });
+  };
+  const handleDeleteReview = id => {
+    deleteReview({ variables: { id } }).then(e => {
+      recipe.reviews = recipe.reviews.filter(r => r.id !== id);
+      console.log(recipe.reviews);
+      setShowDialog(false);
+      window.alert('Deleted');
+    });
+  };
+  const openUser = () => {
+    history.push({
+      pathname: `/user/${recipe.author.id}`,
+      state: { user: recipe.author },
+    });
+  };
   const createdAt = date => {
     return moment(date).fromNow();
   };
@@ -53,7 +90,7 @@ const RecipeDetailPage = () => {
         <div className={styles.header}>
           <div style={{ width: '148px' }} />
           <h2 className={styles.subtitle}>Reviews</h2>
-          <Button style={{ width: '148px' }} label={'+ Write review'} onClick={addReview} secondary />
+          <Button style={{ width: '148px' }} label={'+ Write review'} onClick={() => setShowDialog(true)} secondary />
         </div>
         {recipe.reviews.map(review => (
           <div key={review.id} className={styles.review}>
@@ -66,11 +103,44 @@ const RecipeDetailPage = () => {
                 <div className={styles.time}>{createdAt(review.created)}</div>
               </div>
             </div>
-            <div className={styles.reviewContent}>{review.content}</div>
+            <div className={styles.row}>
+              <div className={styles.reviewContent}>{review.content}</div>
+              {review.user.id === user.id && (
+                <Tooltip title={'Delete Recipe'}>
+                  <IconButton
+                    onClick={() => {
+                      handleDeleteReview(review.id);
+                    }}
+                    style={{ marginLeft: 'auto' }}
+                  >
+                    <DeleteForeverIcon color={'error'} />
+                  </IconButton>
+                </Tooltip>
+              )}
+            </div>
             <Divider />
           </div>
         ))}
       </div>
+      <Dialog
+        header={'Add review'}
+        visible={showDialog}
+        onOutsideClick={() => setShowDialog(false)}
+        positiveLabel={'Post'}
+        negativeLabel={'Cancel'}
+        onPositiveClicked={handleCreateReview}
+        onNegativeClicked={() => setShowDialog(false)}
+      >
+        <div className={styles.container}>
+          <TextInput
+            type="text"
+            placeholder="Write your review here"
+            label="Review content"
+            value={review}
+            onChange={e => setReview(e.target.value)}
+          />
+        </div>
+      </Dialog>
     </PageContainer>
   );
 };
