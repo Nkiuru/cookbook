@@ -39,22 +39,25 @@ const HomePage = () => {
     history.push('/dashboard');
     setShowLoginDialog(false);
   };
-  const loginHandler = ({ email, password }) => {
+  const loginHandler = ({ email, password }, { setSubmitting }) => {
     login({ variables: { email, password } })
       .then(saveCredentials)
       .catch(e => {
         window.alert(e);
+        setSubmitting(false);
       });
   };
-  const signupHandler = ({ email, firstName, lastName, password }) => {
+  const signupHandler = ({ email, firstName, lastName, password }, { setSubmitting }) => {
     signup({ variables: { email, password, firstName, lastName } })
       .then(() => {
         window.alert('Account created');
         setShowDialog(false);
         setShowLoginDialog(true);
+        setSubmitting(false);
       })
       .catch(e => {
         window.alert(e);
+        setSubmitting(false);
       });
   };
   return (

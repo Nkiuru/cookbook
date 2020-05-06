@@ -32,13 +32,15 @@ const ListPage = () => {
     });
   };
   const deleteList = () => {
-    deleteListOp({ variables: { id: list.id } }).then(({ data }) => {
-      window.alert(data.deleteList);
-      setShowDeleteDialog(false);
-      history.goBack();
-    }).catch(e => {
-      window.alert(e);
-    });;
+    deleteListOp({ variables: { id: list.id } })
+      .then(({ data }) => {
+        window.alert(data.deleteList);
+        setShowDeleteDialog(false);
+        history.goBack();
+      })
+      .catch(e => {
+        window.alert(e);
+      });
   };
   return (
     <PageContainer>
@@ -52,7 +54,7 @@ const ListPage = () => {
           </Tooltip>
         )}
         <div className={styles.title}>List: {list.name}</div>
-        <Button label={'Edit List'} onClick={editList} />
+        {list.owner.id === user.id && <Button label={'Edit List'} onClick={editList} />}
       </div>
       <div>
         <div className={styles.row}>

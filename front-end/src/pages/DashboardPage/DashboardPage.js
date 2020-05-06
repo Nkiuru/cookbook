@@ -18,8 +18,14 @@ const DashboardPage = () => {
   const [recipeStart, setRecipeStart] = useState(0);
   const [listStart, setListStart] = useState(0);
   const user = JSON.parse(localStorage.getItem('user'));
-  const { loading, error, data } = useQuery(GET_RECIPES, { variables: { author: user.id } });
-  const { loading: listLoading, error: listError, data: listData } = useQuery(GET_MY_LISTS);
+  const { loading, error, data } = useQuery(GET_RECIPES, {
+    variables: { author: user.id },
+    fetchPolicy: 'cache-and-network',
+  });
+  const { loading: listLoading, error: listError, data: listData } = useQuery(GET_MY_LISTS, {
+    fetchPolicy: 'cache-and-network',
+  });
+  console.log('hmm');
   const openSearch = () => {
     history.push('/recipes/search');
   };
