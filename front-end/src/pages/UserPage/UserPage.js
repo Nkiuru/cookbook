@@ -33,7 +33,7 @@ const UserPage = () => {
           {!loading &&
             !error &&
             data.getRecipes.slice(0, recipeStart + 4).map(recipe => (
-              <div key={recipe.id}>
+              <div key={recipe.id} style={{ flex: '1 0 21%' }}>
                 <RecipeCard recipe={recipe} />
               </div>
             ))}
@@ -56,7 +56,7 @@ const UserPage = () => {
           {!listLoading &&
             !listError &&
             listData.getUsersLists.slice(0, listStart + 4).map(list => (
-              <div key={list.id}>
+              <div key={list.id} style={{ flex: '1 0 21%' }}>
                 <RecipeListCard list={list} />
               </div>
             ))}
