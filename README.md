@@ -1,6 +1,8 @@
 # cookbook
 
-GraphQL api & client for storing & organizing and finding recipes. 
+GraphQL api & client for storing & organizing and finding recipes.
+
+This application is especially useful for those who have tons of recipes that are poorly organized and want to put them into a centralized place
 
 ## Features
 - Create, edit, delete, clone recipe
