@@ -251,7 +251,7 @@ export const ImageInput = ({ values }) => {
             </div>
           ))}
           <Carousel className={styles.carousel}>
-            {values.images[0].file &&
+            {values.images.length > 0 && values.images[0].file &&
               values.images.map((img, index) => (
                 <div key={index}>
                   <img src={getImage(img.file)} alt="img" />
