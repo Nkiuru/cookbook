@@ -32,10 +32,16 @@ SSL_KEY=SET ME
 SSL_CERT=SET ME
 ```
 
+Navigate to `server` directory and run `npm i`
+
+Running development server `npm run dev`
+
 #### Production build
 Set `NODE_ENV` to 'production' set paths to `SLL_KEY` & `SSL_CERT`.
 
 ### **Frontend** 
+Navigate to `front-end` directory and run `npm i`
+
 To run in localhost `npm start`
 
 To make a production build `npm run build`
